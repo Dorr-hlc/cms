@@ -1,4 +1,4 @@
-<template><div>注册</div></template>
+<template><div>首页</div></template>
 <script>
 export default {
   components: {},
