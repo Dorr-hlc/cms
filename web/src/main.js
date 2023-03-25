@@ -14,8 +14,25 @@ import store from "./store/index";
 // 导入路由
 import router from "./router/index";
 // 导入elementui
-import { Notification,Message, Button } from "element-ui";
+import {
+  Notification,
+  Message,
+  Button,
+  Container,
+  Main,
+  Aside,
+  Footer,
+  Header,
+  Menu,
+  MenuItem,
+  MenuItemGroup,
+  Submenu,
+  Icon,
+  Col
+} from "element-ui";
 Vue.use(Button);
+Vue.use(Container).use(Main).use(Aside).use(Footer).use(Header);
+Vue.use(Menu).use(MenuItem).use(MenuItemGroup).use(Submenu).use(Icon).use(Col)
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
 // 导入axios

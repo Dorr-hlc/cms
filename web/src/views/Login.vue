@@ -4,7 +4,7 @@
  * @Date: 2023-03-23 22:33:07
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-25 18:08:18
+ * @LastEditTime: 2023-03-25 20:12:26
  * @RevisionHistory: 
 -->
 <template>
@@ -172,8 +172,8 @@ export default {
       if (!validateEmail(this.RegInfo.email)) {
         return validateUsername(this.TipsTxt.p2, "warning");
       }
-      const reslut = await this.$api.register({ ...this.RegInfo });
-      if (reslut.code == 200) {
+      const res = await this.register({ ...this.RegInfo });
+      if (res.code == 200) {
         this.$notify({
           title: "成功",
           message: "恭喜您注册成功",
@@ -184,9 +184,7 @@ export default {
     },
   },
   created() {},
-  mounted() {
-    console.log(this.login());
-  },
+  mounted() {},
 };
 </script>
 <style lang="less" scoped>
@@ -213,6 +211,9 @@ export default {
   color: #fff;
   outline: 0;
   border: 0;
+  &:hover {
+    cursor: pointer;
+  }
 }
 .btn_rounded {
   border: 1px solid #c3c3c3;

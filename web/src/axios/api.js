@@ -7,7 +7,7 @@ const get = (url, data) => {
       return response;
     })
     .catch((error) => {
-      if (process.env.NODE_ENV !== 'production') {
+      if (process.env.NODE_ENV !== "production") {
         console.error(error);
       }
       throw error;
@@ -21,7 +21,7 @@ const post = (url, data) => {
       return response;
     })
     .catch((error) => {
-      if (process.env.NODE_ENV !== 'production') {
+      if (process.env.NODE_ENV !== "production") {
         console.error(error);
       }
     });
@@ -29,3 +29,4 @@ const post = (url, data) => {
 
 export const login = (data) => post("/login", data);
 export const register = (data) => post("/register", data);
+export const subArticle = (data) => post("/addArticle", data);

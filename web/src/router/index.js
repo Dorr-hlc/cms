@@ -1,11 +1,11 @@
 /*
  * @Copyright: Copyright© 2022 AOMEI
- * @Abstract: 
+ * @Abstract:
  * @Date: 2023-03-23 22:28:18
- * @Author: 
+ * @Author:
  * @LastEditors: houliucun
  * @LastEditTime: 2023-03-25 18:12:42
- * @RevisionHistory: 
+ * @RevisionHistory:
  */
 import Vue from "vue";
 import VueRouter from "vue-router";
@@ -17,6 +17,13 @@ const router = new VueRouter({
       path: "/",
       name: "Home",
       component: () => import("@/layout/Basic"),
+      children: [
+        {
+          path: "/edit",
+          name: "Edit",
+          component: () => import("@/views/Edit/Edit"),
+        },
+      ],
     },
     {
       path: "/login",

@@ -13,13 +13,15 @@ const state = {
 };
 const getters = {};
 const actions = {
-  async login({ commit }, LoginInfo) {
-    const res = await login({ ...LoginInfo });
-
+  login({ commit }, LoginInfo) {
+    const res = login({ ...LoginInfo });
+    if (res.code == 200) {
+      commit("LOGIN", res.data);
+    }
     return res;
   },
-  async register({ commit }, RegInfo) {
-    const res = await register({ ...RegInfo });
+  register({ commit }, RegInfo) {
+    const res = register({ ...RegInfo });
     if (res.code == 200) {
       commit("REGISTER", res.data);
     }
