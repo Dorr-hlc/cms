@@ -1,92 +1,57 @@
+<!--
+ * @Copyright: Copyright© 2022 AOMEI
+ * @Abstract: 
+ * @Date: 2023-03-25 20:35:22
+ * @Author: 
+ * @LastEditors: houliucun
+ * @LastEditTime: 2023-03-26 23:12:46
+ * @RevisionHistory: 
+-->
 <template>
-  <div>
-    <quill-editor
-      v-model="content"
-      ref="myQuillEditor"
-      :options="editorOption"
-      @blur="onEditorBlur($event)"
-      @focus="onEditorFocus($event)"
-      @change="onEditorChange($event)"
-      @ready="onEditorReady($event)"
-    >
-    </quill-editor>
-    <div class="sub" @click="subArticle">提交内容</div>
+  <div class="addForm">
+    <el-form ref="form" :model="form" label-width="80px">
+      <el-form-item label="标题">
+        <el-input v-model="form.name"></el-input>
+      </el-form-item>
+      <el-form-item label="标签">
+        <el-input v-model="form.name"></el-input>
+      </el-form-item>
+      <el-form-item label="作者">
+        <el-input v-model="form.name"></el-input>
+      </el-form-item>
+      <el-form-item label="内容">
+        <el-input type="textarea" v-model="form.desc"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">立即创建</el-button>
+        <el-button>取消</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 <script>
-import { quillEditor } from "vue-quill-editor";
-
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import "quill/dist/quill.bubble.css";
-
 export default {
-  components: { quillEditor },
+  components: {},
   props: [],
   data() {
     return {
-      content: "",
-      // 富文本编辑器配置
-      editorOption: {
-        modules: {
-          toolbar: [
-            ["bold", "italic", "underline", "strike"], // 加粗 斜体 下划线 删除线
-            ["blockquote", "code-block"], // 引用  代码块
-            [{ header: 1 }, { header: 2 }], // 1、2 级标题
-            [{ list: "ordered" }, { list: "bullet" }], // 有序、无序列表
-            [{ script: "sub" }, { script: "super" }], // 上标/下标
-            [{ indent: "-1" }, { indent: "+1" }], // 缩进
-            [{ direction: "rtl" }], // 文本方向
-            [
-              {
-                size: [
-                  "12",
-                  "14",
-                  "16",
-                  "18",
-                  "20",
-                  "22",
-                  "24",
-                  "28",
-                  "32",
-                  "36",
-                ],
-              },
-            ], // 字体大小
-            [{ header: [1, 2, 3, 4, 5, 6] }], // 标题
-            [{ color: [] }, { background: [] }], // 字体颜色、字体背景颜色
-            // [{ font: ['songti'] }], // 字体种类
-            [{ align: [] }], // 对齐方式
-            ["clean"], // 清除文本格式
-            ["image", "video"], // 链接、图片、视频
-          ],
-        },
-        placeholder: "请输入正文",
+      form: {
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
+        delivery: false,
+        type: [],
+        resource: "",
+        desc: "",
       },
     };
   },
   watch: {},
   computed: {},
   methods: {
-    // 失去焦点事件
-    onEditorBlur(quill) {
-      console.log("editor blur!", quill);
-    },
-    // 获得焦点事件
-    onEditorFocus(quill) {
-      console.log("editor focus!", quill);
-    },
-    // 准备富文本编辑器
-    onEditorReady(quill) {
-      console.log("editor ready!", quill);
-    },
-    // 内容改变事件
-    onEditorChange({ quill, html, text }) {
-      console.log("editor change!", quill, html, text);
-      this.content = html;
-    },
-    async subArticle() {
-      const res = await this.$api.subArticle;
+    onSubmit() {
+      console.log("submit!");
     },
   },
   created() {},
@@ -94,14 +59,10 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.sub {
-  width: 300px;
-  height: 48px;
-  background: rgb(142, 142, 247);
-  margin: 40px auto;
-  color: #fff;
-  line-height: 48px;
-  font-weight: 600;
-  cursor: pointer;
+.addForm {
+  background: #fff;
+  border-radius: 10px;
+  margin-top: 40px;
+  padding: 30px;
 }
 </style>

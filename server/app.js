@@ -1,10 +1,19 @@
+/*
+ * @Copyright: Copyright© 2022 AOMEI
+ * @Abstract: 
+ * @Date: 2023-03-23 22:20:18
+ * @Author: 
+ * @LastEditors: houliucun
+ * @LastEditTime: 2023-03-26 13:29:39
+ * @RevisionHistory: 
+ */
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
-const usersRouter = require("./routes/api/api");
+const backRouter = require("./routes/back/api/api");
 const { requireToken } = require("./config/tokenConfig");
 const app = express();
 // view engine setup
@@ -16,8 +25,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
-app.use("/", usersRouter);
-app.use("/api", requireToken);
+app.use(requireToken); //放在路由前，以便于对下面的路由api进行token验证
+app.use("/front", backRouter);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

@@ -1,9 +1,9 @@
 import axios from "axios";
-import { Message } from 'element-ui'
+import { Message } from "element-ui";
 // 创建axios实例
 const service = axios.create({
   //   baseURL: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_API : '/', // 请求的基础url, // 接口的基础路径
-  baseURL: "http://127.0.0.1:3000",
+  baseURL: "http://127.0.0.1:3000/front",
   timeout: 5000, // 请求超时时间
 });
 
@@ -30,7 +30,7 @@ service.interceptors.response.use(
     // 如果返回的状态码为 200，说明接口请求成功，可以正常拿到数据
     if (response.status === 200) {
       return Promise.resolve(response.data);
-    } else {
+    }else {
       // 否则的话抛出错误
       return Promise.reject(response.data);
     }
@@ -42,7 +42,9 @@ service.interceptors.response.use(
       switch (error.response.status) {
         case 401:
           // 当响应状态为 401 Unauthorized 时，跳转到登录页面
-          Message.error("访问接口失败");
+          localStorage.removeItem("token");
+          router.push({ name: "Login" });
+          Message.error("访问接口失败，登录信息过期");
           break;
         case 403:
           // 当响应状态为 403 Forbidden 时，提示没有权限访问该资源

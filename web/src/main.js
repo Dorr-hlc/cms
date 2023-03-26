@@ -28,11 +28,39 @@ import {
   MenuItemGroup,
   Submenu,
   Icon,
-  Col
+  Col,
+  Table,
+  TableColumn,
+  Popover,
+  Tag,
+  Breadcrumb,
+  BreadcrumbItem,
+  Form,
+  FormItem,
+  Input,
 } from "element-ui";
-Vue.use(Button);
-Vue.use(Container).use(Main).use(Aside).use(Footer).use(Header);
-Vue.use(Menu).use(MenuItem).use(MenuItemGroup).use(Submenu).use(Icon).use(Col)
+Vue.use(Button)
+  .use(Container)
+  .use(Main)
+  .use(Aside)
+  .use(Footer)
+  .use(Header)
+  .use(Menu)
+  .use(MenuItem)
+  .use(MenuItemGroup)
+  .use(Submenu)
+  .use(Icon)
+  .use(Col)
+  .use(Table)
+  .use(TableColumn)
+  .use(Popover)
+  .use(Tag)
+  .use(Breadcrumb)
+  .use(Breadcrumb)
+  .use(BreadcrumbItem)
+  .use(Form)
+  .use(FormItem)
+  .use(Input);
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
 // 导入axios

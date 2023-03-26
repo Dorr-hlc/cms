@@ -158,6 +158,11 @@ export default {
       const res = await this.login({ ...this.LoginInfo });
       console.log(res);
       if (res.code == 200) {
+        this.$notify({
+          title: "成功",
+          message: "恭喜您登录成功",
+          type: "success",
+        });
         window.localStorage.setItem("token", res.data.token);
         this.$router.push({ path: "/" });
       }

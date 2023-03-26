@@ -4,7 +4,7 @@
  * @Date: 2023-03-23 22:28:18
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-25 18:12:42
+ * @LastEditTime: 2023-03-26 22:33:09
  * @RevisionHistory:
  */
 import Vue from "vue";
@@ -17,11 +17,25 @@ const router = new VueRouter({
       path: "/",
       name: "Home",
       component: () => import("@/layout/Basic"),
+      meta:{
+        title:"首页"
+      },
       children: [
+        {
+          path: "/list",
+          name: "List",
+          component: () => import("@/views/List/List"),
+          meta:{
+            title:"文章列表"
+          },
+        },
         {
           path: "/edit",
           name: "Edit",
           component: () => import("@/views/Edit/Edit"),
+          meta:{
+            title:"文章编辑"
+          },
         },
       ],
     },

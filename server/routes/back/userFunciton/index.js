@@ -4,11 +4,11 @@
  * @Date: 2023-03-25 12:33:25
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-25 18:01:30
+ * @LastEditTime: 2023-03-26 13:23:25
  * @RevisionHistory:
  */
-const UserModel = require("../../models/userModels");
-const { generateToken } = require("../../config/tokenConfig");
+const UserModel = require("../../../models/userModels");
+const { generateToken } = require("../../../config/tokenConfig");
 async function Login(req, res) {
   try {
     const { usernameOrEmail, password } = req.body;
@@ -46,7 +46,6 @@ async function Login(req, res) {
     });
   }
 }
-
 async function Register(req, res) {
   const { username, password } = req.body;
   if (!username || !password) {
