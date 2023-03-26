@@ -40,18 +40,18 @@
                 <i class="el-icon-s-order"></i>
                 <span>文章管理</span>
               </template>
-              <el-menu-item index="2-1">
-                <router-link to="/list">
+              <router-link to="/list">
+                <el-menu-item index="2-1">
                   <i class="el-icon-reading"></i>
-                  <span>文章列表</span></router-link
-                >
-              </el-menu-item>
-              <el-menu-item index="2-2">
-                <router-link to="/edit">
+                  <span>文章列表</span>
+                </el-menu-item>
+              </router-link>
+              <router-link to="/edit">
+                <el-menu-item index="2-2">
                   <i class="el-icon-edit"></i>
                   <span>文章编辑</span>
-                </router-link>
-              </el-menu-item>
+                </el-menu-item>
+              </router-link>
             </el-submenu>
           </el-menu>
         </el-col>
