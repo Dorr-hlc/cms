@@ -4,7 +4,7 @@
  * @Date: 2023-03-23 22:19:57
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-25 17:57:33
+ * @LastEditTime: 2023-03-28 23:22:37
  * @RevisionHistory:
  */
 import Vue from "vue";
@@ -68,7 +68,9 @@ import axios from "@/axios/http.js";
 import * as Api from "@/axios/api";
 Vue.prototype.$api = Api;
 Vue.prototype.$axios = axios;
-
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+Vue.use(mavonEditor)
 Vue.config.productionTip = false;
 
 new Vue({

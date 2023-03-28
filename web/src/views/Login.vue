@@ -4,7 +4,7 @@
  * @Date: 2023-03-23 22:33:07
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-25 20:12:26
+ * @LastEditTime: 2023-03-28 22:15:45
  * @RevisionHistory: 
 -->
 <template>
@@ -138,6 +138,7 @@ export default {
       TipsTxt: {
         p1: "用户名或密码不能小于3位字符",
         p2: "邮箱格式不正确",
+        p3: "用户名或密码不能为空",
       },
     };
   },
@@ -155,18 +156,26 @@ export default {
     },
 
     async loginBtn() {
+      if (
+        this.LoginInfo.usernameOrEmail == "" ||
+        this.LoginInfo.password == ""
+      ) {
+        return validateUsername(this.TipsTxt.p3, "warning");
+      }
       const res = await this.login({ ...this.LoginInfo });
-      console.log(res);
       if (res.code == 200) {
         this.$notify({
           title: "成功",
-          message: "恭喜您登录成功",
+          message: res.msg,
           type: "success",
         });
         window.localStorage.setItem("token", res.data.token);
         this.$router.push({ path: "/" });
+      } else {
+        return validateUsername(res.msg, "warning");
       }
     },
+
     async regBtn() {
       if (
         this.RegInfo.username.length < 3 ||
@@ -181,7 +190,7 @@ export default {
       if (res.code == 200) {
         this.$notify({
           title: "成功",
-          message: "恭喜您注册成功",
+          message: res.msg,
           type: "success",
         });
         this.toggleLogin();
@@ -196,7 +205,7 @@ export default {
 .wrap_bg {
   position: relative;
   height: 100vh;
-  background-image: url("https://s-media-cache-ak0.pinimg.com/originals/55/57/d7/5557d7261d6a3acf7605f074f0308705.png");
+  background-image: url("@/assets/images/wallhaven-rrgxdq.jpg");
   background-size: cover;
   background-position: 50%;
   overflow: hidden;
