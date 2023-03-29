@@ -4,7 +4,7 @@
  * @Date: 2023-03-25 20:35:22
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-29 17:23:46
+ * @LastEditTime: 2023-03-29 20:57:56
  * @RevisionHistory: 
 -->
 <template>
@@ -23,7 +23,7 @@
         <el-input v-model="form.desc" placeholder="请输入文章描述"></el-input>
       </el-form-item>
       <el-form-item label="内容">
-        <mavon-editor :value="form.content" @change="valueChange" />
+        <mavon-editor v-model="form.content" :preview="true" :subfield="true" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">立即创建</el-button>
@@ -33,7 +33,6 @@
   </div>
 </template>
 <script>
-// import markdowns from "@/views/Edit/mdEdit/mdEdit.vue";
 export default {
   components: {},
   props: [],
@@ -45,7 +44,7 @@ export default {
         author: "",
         desc: "",
         status: "1",
-        content: "",
+        content: "# 111",
       },
     };
   },
@@ -59,8 +58,8 @@ export default {
     valueChange(value, render) {
       //value为输入的内容，render是markdown渲染之后的html代码
       if (value) {
-        this.form.content = value;
-        console.log(value, render);
+        // this.form.content = value;
+        // console.log(value, render);
       }
     },
     async byIdGetArticle() {
@@ -69,7 +68,13 @@ export default {
         let result = await this.$api.getArticle({
           id: this.$route.params.id,
         });
-        this.form = result;
+        // let htmlContent = marked(result.data.content);
+        // let textContent = result.data.content;
+        // this.form.content = {
+        //   html: htmlContent,
+        //   text: textContent,
+        // };
+        this.form = result.data;
       }
     },
   },
