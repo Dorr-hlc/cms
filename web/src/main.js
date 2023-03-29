@@ -73,6 +73,7 @@ import 'mavon-editor/dist/css/index.css'
 Vue.use(mavonEditor)
 Vue.config.productionTip = false;
 
+
 new Vue({
   store,
   router,

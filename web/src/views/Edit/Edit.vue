@@ -4,32 +4,32 @@
  * @Date: 2023-03-25 20:35:22
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-28 23:21:53
+ * @LastEditTime: 2023-03-29 17:23:46
  * @RevisionHistory: 
 -->
 <template>
-  <div>
-    <div class="addForm">
-      <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="标题">
-          <el-input v-model="form.name"></el-input>
-        </el-form-item>
-        <el-form-item label="标签">
-          <el-input v-model="form.name"></el-input>
-        </el-form-item>
-        <el-form-item label="作者">
-          <el-input v-model="form.name"></el-input>
-        </el-form-item>
-        <el-form-item label="内容">
-          <el-input type="textarea" v-model="form.desc"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit">立即创建</el-button>
-          <el-button>取消</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
-    <mavon-editor :value="value" @change="valueChange" />
+  <div class="addForm">
+    <el-form ref="form" :model="form" label-width="80px">
+      <el-form-item label="标题">
+        <el-input v-model="form.title" placeholder="请输入文章标题"></el-input>
+      </el-form-item>
+      <el-form-item label="标签">
+        <el-input v-model="form.tags" placeholder="请输入文章标签"></el-input>
+      </el-form-item>
+      <el-form-item label="作者">
+        <el-input v-model="form.author" placeholder="请输入文章作者"></el-input>
+      </el-form-item>
+      <el-form-item label="描述">
+        <el-input v-model="form.desc" placeholder="请输入文章描述"></el-input>
+      </el-form-item>
+      <el-form-item label="内容">
+        <mavon-editor :value="form.content" @change="valueChange" />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">立即创建</el-button>
+        <el-button>取消</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 <script>
@@ -40,31 +40,43 @@ export default {
   data() {
     return {
       form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
+        title: "",
+        tags: "",
+        author: "",
         desc: "",
+        status: "1",
+        content: "",
       },
-      value: "",
     };
   },
   watch: {},
   computed: {},
   methods: {
     onSubmit() {
-      console.log("submit!");
+      let result = this.$api.subArticle(this.form);
+      console.log(result);
     },
     valueChange(value, render) {
       //value为输入的内容，render是markdown渲染之后的html代码
-      console.log(value, render);
+      if (value) {
+        this.form.content = value;
+        console.log(value, render);
+      }
+    },
+    async byIdGetArticle() {
+      let id = this.$route.params.id;
+      if (id) {
+        let result = await this.$api.getArticle({
+          id: this.$route.params.id,
+        });
+        this.form = result;
+      }
     },
   },
   created() {},
-  mounted() {},
+  mounted() {
+    this.byIdGetArticle();
+  },
 };
 </script>
 <style lang="less" scoped>

@@ -4,7 +4,7 @@
  * @Date: 2023-03-26 22:31:37
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-26 23:06:01
+ * @LastEditTime: 2023-03-29 16:47:50
  * @RevisionHistory: 
 -->
 <template>
@@ -19,12 +19,19 @@
       <el-table-column label="日期">
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
-          <span style="margin-left: 10px">{{ scope.row.date }}</span>
+          <span style="margin-left: 10px">{{ scope.row.time }}</span>
         </template>
       </el-table-column>
       <el-table-column label="标签">
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.tags }}</span>
+          <el-tag
+            v-for="(tagitem, index) in scope.row.tags"
+            :key="index"
+            type="success"
+            effect="plain"
+          >
+            {{ tagitem }}
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column label="标题">
@@ -44,7 +51,11 @@
       <el-table-column label="状态">
         <template slot-scope="scope">
           <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.status }}</el-tag>
+            <el-tag
+              size="medium"
+              :type="currentColorStatus(scope.row.status)"
+              >{{ currentTextStatus(scope.row.status) }}</el-tag
+            >
           </div>
         </template>
       </el-table-column>
@@ -65,34 +76,24 @@
   </div>
 </template>
 <script>
+import moment from "moment";
 export default {
   components: {},
   props: [],
   data() {
     return {
-      tableData: [
-        {
-          date: "2023-05-02",
-          tags: "vue",
-          title: "深入vue",
-          author: "侯柳村",
-          status: 1,
-        },
-        {
-          date: "2023-05-04",
-          tags: "vue",
-          title: "深入vue",
-          author: "侯柳村",
-          status: 0,
-        },
-      ],
+      tableData: [],
     };
   },
   watch: {},
-  computed: {},
+  computed: {
+    // formatDates(timestamp) {
+    //   return moment(timestamp).format("YYYY-MM-DD");
+    // },
+  },
   methods: {
     handleEdit(index, row) {
-      console.log(index, row);
+      this.$router.push({ name: "Edit", params: { id: row._id } });
     },
     handleDelete(index, row) {
       console.log(index, row);
@@ -100,9 +101,36 @@ export default {
     toEdit() {
       this.$router.push({ name: "Edit" });
     },
+    currentColorStatus(status) {
+      let str = "";
+      if (status == "1") {
+        str = "success";
+      } else {
+        str = "info";
+      }
+      return str;
+    },
+    currentTextStatus(status) {
+      let str = "";
+      if (status == "1") {
+        str = "已发布";
+      } else {
+        str = "草稿";
+      }
+      return str;
+    },
+    async getArticleList() {
+      let reslut = await this.$api.getArticle();
+      if (reslut.code == "200") {
+        this.tableData = reslut.data;
+        console.log(this.tableData);
+      }
+    },
   },
   created() {},
-  mounted() {},
+  mounted() {
+    this.getArticleList();
+  },
 };
 </script>
 <style lang="less" scoped>

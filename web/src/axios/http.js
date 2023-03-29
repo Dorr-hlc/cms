@@ -28,9 +28,13 @@ service.interceptors.response.use(
   // 对响应数据进行处理
   (response) => {
     // 如果返回的状态码为 200，说明接口请求成功，可以正常拿到数据
+    Message({
+      type: response.data.type,
+      message: response.data.msg,
+    });
     if (response.status === 200) {
       return Promise.resolve(response.data);
-    }else {
+    } else {
       // 否则的话抛出错误
       return Promise.reject(response.data);
     }

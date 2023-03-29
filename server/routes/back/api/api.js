@@ -10,7 +10,8 @@
 const express = require("express");
 const router = express.Router();
 const { Login, Register } = require("../userFunciton/index");
-const { addArticle } = require("../articleFunction/index");
+const { addArticle, getArticle } = require("../articleFunction/index");
 module.exports = router.post("/login", Login);
 module.exports = router.post("/register", Register);
 module.exports = router.post("/api/addArticle", addArticle);
+module.exports = router.get("/api/getArticle", getArticle);

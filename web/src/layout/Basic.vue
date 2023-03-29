@@ -4,7 +4,7 @@
  * @Date: 2023-03-23 22:31:20
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-26 23:07:12
+ * @LastEditTime: 2023-03-29 14:29:24
  * @RevisionHistory: 
 -->
 <template>
@@ -66,6 +66,7 @@
               {{ breadCrumbItem.meta.title }}</el-breadcrumb-item
             >
           </el-breadcrumb>
+          <!-- 主要对文章编辑页面进行缓存，切换页面时，已经编辑的文字不会清空 -->
           <router-view></router-view>
         </el-main>
       </el-container>

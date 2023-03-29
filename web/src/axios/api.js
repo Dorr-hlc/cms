@@ -1,17 +1,17 @@
 /*
  * @Copyright: Copyright© 2022 AOMEI
- * @Abstract: 
+ * @Abstract:
  * @Date: 2023-03-25 10:34:09
- * @Author: 
+ * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-26 12:34:11
- * @RevisionHistory: 
+ * @LastEditTime: 2023-03-29 17:01:40
+ * @RevisionHistory:
  */
 import http from "@/axios/http";
 
-const get = (url, data) => {
+const get = (url, params) => {
   return http
-    .get(url, data)
+    .get(url, { params })
     .then((response) => {
       return response;
     })
@@ -39,3 +39,4 @@ const post = (url, data) => {
 export const login = (data) => post("/login", data);
 export const register = (data) => post("/register", data);
 export const subArticle = (data) => post("/api/addArticle", data);
+export const getArticle = (params) => get("/api/getArticle", params);

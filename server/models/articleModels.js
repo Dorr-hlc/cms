@@ -4,7 +4,7 @@
  * @Date: 2023-03-26 09:32:49
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-26 09:32:56
+ * @LastEditTime: 2023-03-29 14:18:56
  * @RevisionHistory:
  */
 const mongoose = require("mongoose");
@@ -14,9 +14,24 @@ let ArticleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  date: {
+  tags: {
+    type: Array,
+    required: true,
+  },
+  author: {
+    type: String,
+    required: true,
+  },
+  desc: {
+    type: String,
+    required: true,
+  },
+  time: {
     type: Date,
     required: true,
+  },
+  status: {
+    type: String,
   },
   content: {
     type: String,
