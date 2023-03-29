@@ -4,7 +4,7 @@
  * @Date: 2023-03-25 20:35:22
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-29 20:57:56
+ * @LastEditTime: 2023-03-29 23:15:18
  * @RevisionHistory: 
 -->
 <template>
@@ -74,7 +74,9 @@ export default {
         //   html: htmlContent,
         //   text: textContent,
         // };
+
         this.form = result.data;
+        this.form.tags = this.form.tags.map((item) => item).join(",");
       }
     },
   },

@@ -4,38 +4,38 @@
  * @Date: 2023-03-26 09:42:42
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-29 17:08:36
+ * @LastEditTime: 2023-03-29 22:58:25
  * @RevisionHistory:
  */
 const ArticleModel = require("../../../models/articleModels");
 const moment = require("moment");
-const { param } = require("../../../app");
 // 添加文章
+
 async function addArticle(req, res) {
-  await ArticleModel.create(
-    {
-      ...req.body,
-      // 修改time属性的值
-      time: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
-    },
-    (err, data) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({
-          code: "500",
-          msg: "服务器错误",
-          type: "error",
-        });
-      }
-      return res.json({
-        code: "200",
-        msg: "文章创建成功",
-        type: "success",
-        data: null,
-      });
-    }
-  );
+  try {
+    const { _id, ...articleData } = req.body;
+    const time = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
+    const options = { new: true }; // 将选项对象提取出来，避免代码重复
+    const article = _id
+      ? await ArticleModel.findByIdAndUpdate(_id, { ...articleData, time }, options)
+      : await ArticleModel.create({ ...articleData, time });
+    const message = _id ? "文章更新成功" : "文章创建成功";
+    return res.json({
+      code: "200",
+      msg: message,
+      type: "success",
+      data: article,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      code: "500",
+      msg: "服务器错误",
+      type: "error",
+    });
+  }
 }
+
 // 查询文章
 async function getArticle(req, res, next) {
   try {
