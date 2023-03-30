@@ -4,7 +4,7 @@
  * @Date: 2023-03-25 20:35:22
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-29 20:57:56
+ * @LastEditTime: 2023-03-30 09:14:09
  * @RevisionHistory: 
 -->
 <template>
@@ -23,7 +23,12 @@
         <el-input v-model="form.desc" placeholder="请输入文章描述"></el-input>
       </el-form-item>
       <el-form-item label="内容">
-        <mavon-editor v-model="form.content" :preview="true" :subfield="true" />
+        <mavon-editor
+          v-model="form.content"
+          :preview="true"
+          :subfield="true"
+          @error="handleError"
+        />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">立即创建</el-button>
@@ -56,11 +61,15 @@ export default {
       console.log(result);
     },
     valueChange(value, render) {
+      console.log(content);
       //value为输入的内容，render是markdown渲染之后的html代码
       if (value) {
         // this.form.content = value;
         // console.log(value, render);
       }
+    },
+    handleError(err) {
+      console.log(err);
     },
     async byIdGetArticle() {
       let id = this.$route.params.id;
@@ -68,13 +77,8 @@ export default {
         let result = await this.$api.getArticle({
           id: this.$route.params.id,
         });
-        // let htmlContent = marked(result.data.content);
-        // let textContent = result.data.content;
-        // this.form.content = {
-        //   html: htmlContent,
-        //   text: textContent,
-        // };
         this.form = result.data;
+        this.form.tags = this.form.tags.map((item) => item.join(","));
       }
     },
   },
