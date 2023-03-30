@@ -4,7 +4,7 @@
  * @Date: 2023-03-25 10:34:09
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-29 17:01:40
+ * @LastEditTime: 2023-03-30 21:20:53
  * @RevisionHistory:
  */
 import http from "@/axios/http";
@@ -40,3 +40,4 @@ export const login = (data) => post("/login", data);
 export const register = (data) => post("/register", data);
 export const subArticle = (data) => post("/api/addArticle", data);
 export const getArticle = (params) => get("/api/getArticle", params);
+export const uploadImg = (params) => post("/api/uploadImg", params);
