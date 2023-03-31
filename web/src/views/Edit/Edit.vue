@@ -4,7 +4,7 @@
  * @Date: 2023-03-25 20:35:22
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-31 14:18:25
+ * @LastEditTime: 2023-04-01 14:59:46
  * @LastEditTime: 2023-03-30 09:36:43
  * @RevisionHistory: 
 -->
@@ -31,12 +31,6 @@
           @imgAdd="imgAdd"
           :preview="true"
           :subfield="true"
-        />
-        <mavon-editor
-          v-model="form.content"
-          :preview="true"
-          :subfield="true"
-          @error="handleError"
         />
       </el-form-item>
       <el-form-item>
@@ -70,7 +64,6 @@ export default {
       this.$router.push({ name: "List" });
     },
     valueChange(value, render) {
-      console.log(content);
       //value为输入的内容，render是markdown渲染之后的html代码
       if (value) {
         console.log(value, render);

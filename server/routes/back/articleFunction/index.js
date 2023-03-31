@@ -4,7 +4,7 @@
  * @Date: 2023-03-26 09:42:42
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-30 22:57:57
+ * @LastEditTime: 2023-04-01 15:09:38
  * @RevisionHistory:
  */
 const ArticleModel = require("../../../models/articleModels");
@@ -15,7 +15,7 @@ const moment = require("moment");
 async function addArticle(req, res) {
   try {
     const { _id, ...articleData } = req.body;
-    const time = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
+    const time = moment(Date.now(), 'Asia/SiChuan').format("YYYY-MM-DD HH:mm:ss");
     const options = { new: true }; // 将选项对象提取出来，避免代码重复
     const article = _id
       ? await ArticleModel.findByIdAndUpdate(
