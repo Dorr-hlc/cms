@@ -4,7 +4,7 @@
  * @Date: 2023-03-26 22:31:37
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-29 16:47:50
+ * @LastEditTime: 2023-03-30 20:49:02
  * @RevisionHistory: 
 -->
 <template>
@@ -123,7 +123,6 @@ export default {
       let reslut = await this.$api.getArticle();
       if (reslut.code == "200") {
         this.tableData = reslut.data;
-        console.log(this.tableData);
       }
     },
   },

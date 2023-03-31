@@ -4,11 +4,12 @@
  * @Date: 2023-03-26 09:42:42
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-29 22:58:25
+ * @LastEditTime: 2023-03-30 22:57:57
  * @RevisionHistory:
  */
 const ArticleModel = require("../../../models/articleModels");
 const moment = require("moment");
+
 // 添加文章
 
 async function addArticle(req, res) {
@@ -17,7 +18,11 @@ async function addArticle(req, res) {
     const time = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
     const options = { new: true }; // 将选项对象提取出来，避免代码重复
     const article = _id
-      ? await ArticleModel.findByIdAndUpdate(_id, { ...articleData, time }, options)
+      ? await ArticleModel.findByIdAndUpdate(
+          _id,
+          { ...articleData, time },
+          options
+        )
       : await ArticleModel.create({ ...articleData, time });
     const message = _id ? "文章更新成功" : "文章创建成功";
     return res.json({
@@ -36,6 +41,24 @@ async function addArticle(req, res) {
   }
 }
 
+// 添加图片
+
+async function uploadImg(req, res, next) {
+  try {
+    const file = req.file;
+    const url = `${req.protocol}://${req.get("host")}/${file.path}`;
+    res.json({
+      code: 0,
+      data: {
+        url,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("上传失败");
+  }
+}
+
 // 查询文章
 async function getArticle(req, res, next) {
   try {
@@ -50,7 +73,7 @@ async function getArticle(req, res, next) {
     const data = await query.exec();
     res.json({
       code: "200",
-      msg: "获取文章列表成功",
+      msg: "获取文章成功",
       type: "success",
       data: data,
     });
@@ -63,4 +86,5 @@ async function getArticle(req, res, next) {
 module.exports = {
   addArticle,
   getArticle,
+  uploadImg,
 };
