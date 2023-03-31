@@ -4,7 +4,7 @@
  * @Date: 2023-03-25 20:35:22
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-30 09:14:09
+ * @LastEditTime: 2023-03-30 09:36:43
  * @RevisionHistory: 
 -->
 <template>
@@ -77,8 +77,15 @@ export default {
         let result = await this.$api.getArticle({
           id: this.$route.params.id,
         });
+        // let htmlContent = marked(result.data.content);
+        // let textContent = result.data.content;
+        // this.form.content = {
+        //   html: htmlContent,
+        //   text: textContent,
+        // };
+
         this.form = result.data;
-        this.form.tags = this.form.tags.map((item) => item.join(","));
+        this.form.tags = this.form.tags.map((item) => item).join(",");
       }
     },
   },
