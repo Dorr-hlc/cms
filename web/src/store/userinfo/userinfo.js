@@ -1,9 +1,9 @@
-import { validateUsername, validateEmail } from "@/utils/common";
 import { login, register } from "@/axios/api";
 const state = {
   LoginInfo: {
-    usernameOrEmail: "",
-    password: "",
+    username: JSON.parse(window.localStorage.getItem("user"))?.username || "",
+    email: JSON.parse(window.localStorage.getItem("user"))?.email || "",
+    token: JSON.parse(window.localStorage.getItem("user"))?.token || "",
   },
   RegInfo: {
     username: "",
@@ -13,15 +13,15 @@ const state = {
 };
 const getters = {};
 const actions = {
-  login({ commit }, LoginInfo) {
-    const res = login({ ...LoginInfo });
+  async login({ commit }, LoginInfo) {
+    const res = await login({ ...LoginInfo });
     if (res.code == 200) {
       commit("LOGIN", res.data);
     }
     return res;
   },
-  register({ commit }, RegInfo) {
-    const res = register({ ...RegInfo });
+  async register({ commit }, RegInfo) {
+    const res = await register({ ...RegInfo });
     if (res.code == 200) {
       commit("REGISTER", res.data);
     }

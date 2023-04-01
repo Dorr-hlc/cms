@@ -4,7 +4,7 @@
  * @Date: 2023-03-26 09:32:49
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-29 14:18:56
+ * @LastEditTime: 2023-04-01 21:02:32
  * @RevisionHistory:
  */
 const mongoose = require("mongoose");
@@ -35,6 +35,11 @@ let ArticleSchema = new mongoose.Schema({
   },
   content: {
     type: String,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
   },
 });
 //   创建模型对象

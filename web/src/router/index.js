@@ -4,11 +4,12 @@
  * @Date: 2023-03-23 22:28:18
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-29 16:18:44
+ * @LastEditTime: 2023-04-01 23:03:44
  * @RevisionHistory:
  */
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "@/store";
 Vue.use(VueRouter);
 const router = new VueRouter({
   mode: "history",
@@ -43,13 +44,14 @@ const router = new VueRouter({
     {
       path: "/login",
       name: "Login",
-      component: () => import("@/views/Login"),
+      component: () => import("@/views/Login/Login"),
     },
   ],
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.name != "Login" && window.localStorage.getItem("token") == null) {
+  // console.log(store.state.userinfo.LoginInfo.token);
+  if (to.name != "Login" && !store.state.userinfo.LoginInfo.token) {
     // 如果去往的页面不是登录页面，并且token不存在。就跳转到登录页登录
     next({ name: "Login" });
   } else {

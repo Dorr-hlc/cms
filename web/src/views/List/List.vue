@@ -93,7 +93,7 @@ export default {
   },
   methods: {
     handleEdit(index, row) {
-      this.$router.push({ name: "Edit", params: { id: row._id } });
+      this.$router.push({ name: "Edit", params: { article_id: row._id } });
     },
     handleDelete(index, row) {
       console.log(index, row);

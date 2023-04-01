@@ -1,4 +1,14 @@
+/*
+ * @Copyright: Copyright© 2022 AOMEI
+ * @Abstract:
+ * @Date: 2023-03-25 10:22:31
+ * @Author:
+ * @LastEditors: houliucun
+ * @LastEditTime: 2023-04-02 00:28:18
+ * @RevisionHistory:
+ */
 import axios from "axios";
+import store from "@/store";
 import { Message } from "element-ui";
 // 创建axios实例
 const service = axios.create({
@@ -11,7 +21,7 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     // 在请求头中添加token
-    const token = localStorage.getItem("token");
+    const token = store.state.userinfo.LoginInfo.token;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

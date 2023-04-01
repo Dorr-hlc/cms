@@ -4,7 +4,7 @@
  * @Date: 2023-03-25 12:11:51
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-26 13:42:19
+ * @LastEditTime: 2023-04-01 20:17:40
  * @RevisionHistory:
  */
 const jwt = require("jsonwebtoken");
@@ -24,8 +24,7 @@ function requireToken(req, res, next) {
       if (err) {
         res
           .status(401)
-          .set("X-Auth-Error", "Token expired")
-          .json({ code: 401, msg: "Token expired" });
+          .json({ code: 401, msg: "登录信息过期，请重新登录", type: "error" });
       } else {
         next();
       }

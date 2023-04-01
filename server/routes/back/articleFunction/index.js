@@ -4,7 +4,7 @@
  * @Date: 2023-03-26 09:42:42
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-04-01 15:09:38
+ * @LastEditTime: 2023-04-01 21:59:59
  * @RevisionHistory:
  */
 const ArticleModel = require("../../../models/articleModels");
@@ -14,16 +14,18 @@ const moment = require("moment");
 
 async function addArticle(req, res) {
   try {
+    const user = req.user.data.userInfo._id;
     const { _id, ...articleData } = req.body;
-    const time = moment(Date.now(), 'Asia/SiChuan').format("YYYY-MM-DD HH:mm:ss");
-    const options = { new: true }; // 将选项对象提取出来，避免代码重复
+    const time = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
+    console.log(user);
+    const options = { new: true }; // 将选项对象提取出来，避免代码重复 ,{ new: true }告诉MongoDB返回更新后的文档。
     const article = _id
       ? await ArticleModel.findByIdAndUpdate(
           _id,
-          { ...articleData, time },
+          { ...articleData, time, user },
           options
         )
-      : await ArticleModel.create({ ...articleData, time });
+      : await ArticleModel.create({ ...articleData, time, user });
     const message = _id ? "文章更新成功" : "文章创建成功";
     return res.json({
       code: "200",
@@ -62,13 +64,14 @@ async function uploadImg(req, res, next) {
 // 查询文章
 async function getArticle(req, res, next) {
   try {
-    const { id, desc } = req.query;
-    let query = ArticleModel.find();
-    if (id) {
-      query = ArticleModel.findById({ _id: id });
+    const user_id = req.user.data.userInfo._id;
+    let query = ArticleModel.find({ user: user_id });
+    const { article_id, desc } = req.query;
+    if (article_id) {
+      query = ArticleModel.findOne({ _id: article_id, user: user_id });
     }
     if (desc) {
-      query = query.sort({ time: desc });
+      query = query.sort({ time: desc }).where("user").equals(user_id);
     }
     const data = await query.exec();
     res.json({

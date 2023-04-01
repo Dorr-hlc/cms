@@ -4,7 +4,7 @@
  * @Date: 2023-03-23 22:33:07
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-28 22:15:45
+ * @LastEditTime: 2023-04-01 22:40:09
  * @RevisionHistory: 
 -->
 <template>
@@ -164,15 +164,8 @@ export default {
       }
       const res = await this.login({ ...this.LoginInfo });
       if (res.code == 200) {
-        this.$notify({
-          title: "成功",
-          message: res.msg,
-          type: "success",
-        });
-        window.localStorage.setItem("token", res.data.token);
+        window.localStorage.setItem("user", JSON.stringify(res.data));
         this.$router.push({ path: "/" });
-      } else {
-        return validateUsername(res.msg, "warning");
       }
     },
 
@@ -188,11 +181,6 @@ export default {
       }
       const res = await this.register({ ...this.RegInfo });
       if (res.code == 200) {
-        this.$notify({
-          title: "成功",
-          message: res.msg,
-          type: "success",
-        });
         this.toggleLogin();
       }
     },
@@ -250,19 +238,23 @@ export default {
 .label_name:before,
 .label_mail:before,
 .label_pass:before {
+  content: "";
   position: absolute;
   right: 5px;
   top: 10px;
+  width: 16px;
+  height: 16px;
+  background-size: 16px 16px;
   transition: color 0.4s cubic-bezier(1, 0, 0, 1);
 }
 .label_name:before {
-  content: "\f007";
+  background-image: url("@/assets/images/icon/user.png");
 }
 .label_mail:before {
-  content: "\f0e0";
+  background-image: url("@/assets/images/icon/mail.png");
 }
 .label_pass:before {
-  content: "\f023";
+  background-image: url("@/assets/images/icon/password.png");
 }
 .forgotPass {
   text-decoration: none;

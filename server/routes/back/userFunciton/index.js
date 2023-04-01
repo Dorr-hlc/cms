@@ -4,7 +4,7 @@
  * @Date: 2023-03-25 12:33:25
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-28 22:22:16
+ * @LastEditTime: 2023-04-01 21:46:09
  * @RevisionHistory:
  */
 const UserModel = require("../../../models/userModels");
@@ -19,6 +19,7 @@ async function Login(req, res) {
       return res.json({
         code: "400",
         msg: "用户名或密码不能为空",
+        type: "error",
         data: null,
       });
     }
@@ -26,6 +27,7 @@ async function Login(req, res) {
       return res.json({
         code: "401",
         msg: "未找到该用户!",
+        type: "error",
         data: null,
       });
     }
@@ -33,14 +35,23 @@ async function Login(req, res) {
       return res.json({
         code: "401",
         msg: "用户名或密码错误!",
+        type: "error",
         data: null,
       });
     } else {
-      const token = generateToken({ usernameOrEmail });
+      const userInfo = await UserModel.findOne({
+        $or: [{ username: usernameOrEmail }, { email: usernameOrEmail }],
+      }).exec(); //登录时根据用户名或者邮箱都可以去登录
+      const token = generateToken({ userInfo });
       res.json({
         code: "200",
         msg: "恭喜您登录成功！",
-        data: { token },
+        type: "success",
+        data: {
+          username: userInfo.username,
+          email: userInfo.email,
+          token,
+        },
       });
     }
   } catch (error) {
@@ -48,6 +59,7 @@ async function Login(req, res) {
     res.json({
       code: "500",
       msg: "服务器错误",
+      type: "error",
       data: null,
     });
   }
@@ -58,6 +70,7 @@ async function Register(req, res) {
     return res.json({
       code: "400",
       msg: "用户名或密码不能为空",
+      type: "error",
       data: null,
     });
   }
@@ -66,6 +79,7 @@ async function Register(req, res) {
     return res.json({
       code: "401",
       msg: "用户已存在",
+      type: "error",
       data: null,
     });
   }
@@ -78,12 +92,14 @@ async function Register(req, res) {
         return res.json({
           code: "401",
           msg: "注册失败",
+          type: "error",
           data: null,
         });
       }
       return res.json({
         code: "200",
         msg: "注册成功",
+        type: "success",
         data: null,
       });
     }

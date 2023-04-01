@@ -4,7 +4,7 @@
  * @Date: 2023-03-23 22:31:20
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-29 14:29:24
+ * @LastEditTime: 2023-04-02 00:21:43
  * @RevisionHistory: 
 -->
 <template>
@@ -15,8 +15,8 @@
         <div class="avator">
           <img src="@/assets/images/tx.png" alt="" sizes="" srcset="" />
         </div>
-        <div class="name">HLC</div>
-        <div class="loginout">退出</div>
+        <div class="name">{{ username }}</div>
+        <div class="loginout" @click="loginOut()">退出</div>
       </div>
     </el-header>
     <el-container>
@@ -74,6 +74,7 @@
   </el-container>
 </template>
 <script>
+import { mapState } from "vuex";
 export default {
   components: {},
   props: [],
@@ -82,11 +83,19 @@ export default {
   },
   watch: {},
   computed: {
+    ...mapState({
+      username: (state) => state.userinfo.LoginInfo.username,
+    }),
     breadCrumbList() {
       return this.$route.matched;
     },
   },
-  methods: {},
+  methods: {
+    loginOut() {
+      window.localStorage.removeItem("user");
+      this.$router.push({ name: "Login" });
+    },
+  },
   created() {},
   mounted() {},
 };
