@@ -4,7 +4,7 @@
  * @Date: 2023-03-25 20:35:22
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-04-03 15:28:22
+ * @LastEditTime: 2023-04-03 17:24:13
  * @LastEditTime: 2023-03-30 09:36:43
  * @RevisionHistory: 
 -->
@@ -35,7 +35,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">立即创建</el-button>
-        <el-button>取消</el-button>
+        <el-button @click="onCancel">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -63,12 +63,14 @@ export default {
       this.$api.subArticle(this.form);
       this.$router.push({ name: "List" });
     },
+    onCancel() {},
     valueChange(value, render) {
       //value为输入的内容，render是markdown渲染之后的html代码
       if (value) {
         console.log(value, render);
       }
     },
+
     async imgAdd(pos, $file) {
       let _this = this;
       let result = await this.$api.uploadImg($file);

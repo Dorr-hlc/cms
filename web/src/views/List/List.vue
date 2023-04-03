@@ -4,7 +4,7 @@
  * @Date: 2023-03-26 22:31:37
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-30 20:49:02
+ * @LastEditTime: 2023-04-03 17:39:21
  * @RevisionHistory: 
 -->
 <template>
@@ -64,15 +64,28 @@
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
             >编辑</el-button
           >
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)"
-            >删除</el-button
+          <el-popconfirm
+            class="deleteBtn"
+            title="确认删除改文章？"
+            @confirm="handleDelete(scope.$index, scope.row)"
           >
+            <el-button size="mini" type="danger" slot="reference"
+              >删除</el-button
+            >
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[1, 2, 3, 4]"
+      :page-size="limit"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="pagination.totalPages"
+    >
+    </el-pagination>
   </div>
 </template>
 <script>
@@ -83,6 +96,13 @@ export default {
   data() {
     return {
       tableData: [],
+      currentPage: 1,
+      limit: 1,
+      pagination: {
+        page: 1,
+        totalArticles: 0,
+        totalPages: 0,
+      },
     };
   },
   watch: {},
@@ -95,8 +115,13 @@ export default {
     handleEdit(index, row) {
       this.$router.push({ name: "Edit", params: { article_id: row._id } });
     },
-    handleDelete(index, row) {
-      console.log(index, row);
+    async handleDelete(index, row) {
+      let result = await this.$api.deleteArticle({
+        article_id: row._id,
+      });
+      if (result.code == 200) {
+        this.getArticleList();
+      }
     },
     toEdit() {
       this.$router.push({ name: "Edit" });
@@ -120,10 +145,20 @@ export default {
       return str;
     },
     async getArticleList() {
-      let reslut = await this.$api.getArticle();
+      let reslut = await this.$api.getArticle({
+        page: this.currentPage,
+        limit: this.limit,
+      });
       if (reslut.code == "200") {
-        this.tableData = reslut.data;
+        this.tableData = reslut.data.articles;
+        this.pagination = reslut.data.pagination;
       }
+    },
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
     },
   },
   created() {},
@@ -142,5 +177,18 @@ export default {
   .addbtn {
     margin-bottom: 10px;
   }
+
+  .deleteBtn {
+    margin-left: 20px;
+  }
+}
+</style>
+<style>
+.el-popconfirm__main {
+  margin-bottom: 10px;
+}
+.el-pagination {
+  text-align: center;
+  margin-top: 80px;
 }
 </style>

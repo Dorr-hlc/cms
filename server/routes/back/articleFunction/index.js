@@ -4,9 +4,10 @@
  * @Date: 2023-03-26 09:42:42
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-04-03 15:26:44
+ * @LastEditTime: 2023-04-03 17:47:03
  * @RevisionHistory:
  */
+const { log } = require("console");
 const ArticleModel = require("../../../models/articleModels");
 const { disposeSendResponse } = require("../../../utils/resFunction");
 const moment = require("moment");
@@ -91,21 +92,40 @@ async function uploadImg(req, res, next) {
 async function getArticle(req, res, next) {
   try {
     const user_id = req.user.data.user._id;
-    let query = ArticleModel.find({ user: user_id });
+    let { page = 1, limit = 10 } = req.query;
+    page = parseInt(page);
+    limit = parseInt(limit);
+    const skip = (page - 1) * limit;
+    let query = ArticleModel.find({ user: user_id }).skip(skip).limit(limit);
     const { article_id, desc } = req.query;
     if (article_id) {
-      query = ArticleModel.findOne({ _id: article_id}).where("user").equals(user_id);
+      query = ArticleModel.findOne({ _id: article_id })
+        .where("user")
+        .equals(user_id);
     }
     if (desc) {
       query = query.sort({ time: desc }).where("user").equals(user_id);
     }
+    // 当给定查询执行两次时，Mongoose 会抛出 "Query was already executed"(查询已执行)错误。对此最常见的解释是您正在混合 await 和回调。
+    //解决方案是跳过传递回调。在 Mongoose 中不需要回调，因为 Mongoose 支持 promises 和 async/await。但如果我们想执行两次查询呢？可以使用 clone() 方法：
+    console.log(query);
+    const count = await query.clone().countDocuments();
     const data = await query.exec();
+    const totalPages = Math.ceil(count / limit);
+    console.log(count,totalPages);
     return disposeSendResponse({
       res,
       code: "200",
       msg: "获取文章成功",
       type: "success",
-      data: data,
+      data: {
+        articles: data,
+        pagination: {
+          page,
+          totalPages,
+          totalArticles: count,
+        },
+      },
     });
   } catch (err) {
     console.error(err);
@@ -113,8 +133,33 @@ async function getArticle(req, res, next) {
   }
 }
 
+// 删除文章
+async function deleteArticle(req, res) {
+  try {
+    let { article_id } = req.body;
+    if (article_id) {
+      await ArticleModel.deleteOne({ _id: article_id });
+      return disposeSendResponse({
+        res,
+        code: "200",
+        msg: "删除文章成功",
+        type: "success",
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    return disposeSendResponse({
+      res,
+      code: "500",
+      msg: "删除失败",
+      type: "error",
+    });
+  }
+}
+
 module.exports = {
   addArticle,
   getArticle,
+  deleteArticle,
   uploadImg,
 };

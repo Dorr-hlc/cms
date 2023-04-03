@@ -4,7 +4,7 @@
  * @Date: 2023-03-23 22:31:20
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-04-03 11:20:51
+ * @LastEditTime: 2023-04-03 17:19:21
  * @RevisionHistory: 
 -->
 <template>
@@ -53,8 +53,28 @@
           <div class="avator">
             <img src="@/assets/images/tx.png" alt="" sizes="" srcset="" />
           </div>
-          <div class="name">{{ username }}</div>
-          <div class="loginout" @click="loginOut()">退出</div>
+
+          <el-dropdown>
+            <span class="el-dropdown-link">
+              <div class="name">
+                {{ username }} <i class="el-icon-caret-bottom"></i>
+              </div>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
+              <el-dropdown-item icon="el-icon-circle-plus"
+                >狮子头</el-dropdown-item
+              >
+              <el-dropdown-item icon="el-icon-circle-plus-outline"
+                >螺蛳粉</el-dropdown-item
+              >
+              <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
+              <el-dropdown-item icon="el-icon-circle-check"
+                >蚵仔煎</el-dropdown-item
+              >
+            </el-dropdown-menu>
+          </el-dropdown>
+          <!-- <div class="loginout" @click="loginOut()">退出</div> -->
         </div>
       </el-header>
       <el-container>
@@ -67,7 +87,6 @@
               {{ breadCrumbItem.meta.title }}</el-breadcrumb-item
             >
           </el-breadcrumb>
-          <!-- 主要对文章编辑页面进行缓存，切换页面时，已经编辑的文字不会清空 -->
           <router-view></router-view>
         </el-main>
       </el-container>

@@ -4,7 +4,7 @@
  * @Date: 2023-03-23 22:19:57
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-29 20:07:32
+ * @LastEditTime: 2023-04-03 16:49:38
  * @RevisionHistory:
  */
 import Vue from "vue";
@@ -38,6 +38,11 @@ import {
   Form,
   FormItem,
   Input,
+  Popconfirm,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  Pagination,
 } from "element-ui";
 Vue.use(Button)
   .use(Container)
@@ -60,19 +65,24 @@ Vue.use(Button)
   .use(BreadcrumbItem)
   .use(Form)
   .use(FormItem)
-  .use(Input);
+  .use(Input)
+  .use(Popconfirm)
+  .use(Dropdown)
+  .use(DropdownItem)
+  .use(DropdownMenu)
+  .use(Pagination);
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
+
 // 导入axios
 import axios from "@/axios/http.js";
 import * as Api from "@/axios/api";
 Vue.prototype.$api = Api;
 Vue.prototype.$axios = axios;
-import mavonEditor from 'mavon-editor'
-import 'mavon-editor/dist/css/index.css'
-Vue.use(mavonEditor)
+import mavonEditor from "mavon-editor";
+import "mavon-editor/dist/css/index.css";
+Vue.use(mavonEditor);
 Vue.config.productionTip = false;
-
 
 new Vue({
   store,
