@@ -4,9 +4,11 @@
  * @Date: 2023-03-25 12:33:25
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-04-01 21:46:09
+ * @LastEditTime: 2023-04-03 09:55:44
  * @RevisionHistory:
  */
+const { disposeSendResponse } = require("../../../utils/resFunction");
+
 const UserModel = require("../../../models/userModels");
 const { generateToken } = require("../../../config/tokenConfig");
 async function Login(req, res) {
@@ -14,73 +16,76 @@ async function Login(req, res) {
     const { usernameOrEmail, password } = req.body;
     const user = await UserModel.findOne({
       $or: [{ username: usernameOrEmail }, { email: usernameOrEmail }],
-    });
+    }).exec();
     if (!usernameOrEmail || !password) {
-      return res.json({
+      return disposeSendResponse({
+        res,
         code: "400",
         msg: "用户名或密码不能为空",
         type: "error",
-        data: null,
       });
     }
     if (!user) {
-      return res.json({
+      return disposeSendResponse({
+        res,
         code: "401",
-        msg: "未找到该用户!",
+        msg: "未找到该用户",
         type: "error",
-        data: null,
       });
     }
-    if (user.password != password || user.username != usernameOrEmail) {
-      return res.json({
+    if (
+      user.password != password ||
+      (user.username != usernameOrEmail && user.email != usernameOrEmail)
+    ) {
+      return disposeSendResponse({
+        res,
         code: "401",
-        msg: "用户名或密码错误!",
+        msg: "用户名或密码错误",
         type: "error",
-        data: null,
-      });
-    } else {
-      const userInfo = await UserModel.findOne({
-        $or: [{ username: usernameOrEmail }, { email: usernameOrEmail }],
-      }).exec(); //登录时根据用户名或者邮箱都可以去登录
-      const token = generateToken({ userInfo });
-      res.json({
-        code: "200",
-        msg: "恭喜您登录成功！",
-        type: "success",
-        data: {
-          username: userInfo.username,
-          email: userInfo.email,
-          token,
-        },
       });
     }
+    console.log('继续执行');
+    const token = generateToken({ user });
+    return disposeSendResponse({
+      res,
+      code: "200",
+      msg: "恭喜您登录成功！",
+      type: "success",
+      data: {
+        username: user.username,
+        email: user.email,
+        token,
+      },
+    });
   } catch (error) {
     console.error(error);
-    res.json({
+    return disposeSendResponse({
+      res,
       code: "500",
       msg: "服务器错误",
       type: "error",
-      data: null,
     });
   }
 }
 async function Register(req, res) {
-  const { username, password } = req.body;
-  if (!username || !password) {
-    return res.json({
+  const { username, password, email } = req.body;
+  const user = await UserModel.findOne({
+    $or: [{ username: username }, { email: email }],
+  }).exec();
+  if (!username || !password || !email) {
+    return disposeSendResponse({
+      res,
       code: "400",
       msg: "用户名或密码不能为空",
       type: "error",
-      data: null,
     });
   }
-  const user = await UserModel.findOne({ username });
-  if (user != null && user.password == password) {
-    return res.json({
-      code: "401",
-      msg: "用户已存在",
+  if (user.username === username || user.email === email) {
+    return disposeSendResponse({
+      res,
+      code: "400",
+      msg: "用户名或密码已被占用",
       type: "error",
-      data: null,
     });
   }
   UserModel.create(
@@ -89,18 +94,18 @@ async function Register(req, res) {
     },
     (err, data) => {
       if (err) {
-        return res.json({
+        return disposeSendResponse({
+          res,
           code: "401",
           msg: "注册失败",
           type: "error",
-          data: null,
         });
       }
-      return res.json({
+      return disposeSendResponse({
+        res,
         code: "200",
         msg: "注册成功",
         type: "success",
-        data: null,
       });
     }
   );

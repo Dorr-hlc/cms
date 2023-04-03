@@ -4,58 +4,59 @@
  * @Date: 2023-03-23 22:31:20
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-04-02 00:21:43
+ * @LastEditTime: 2023-04-03 11:20:51
  * @RevisionHistory: 
 -->
 <template>
   <el-container class="layout">
-    <el-header>
-      <div class="logo">HLC-BOLG</div>
-      <div class="user-info">
-        <div class="avator">
-          <img src="@/assets/images/tx.png" alt="" sizes="" srcset="" />
-        </div>
-        <div class="name">{{ username }}</div>
-        <div class="loginout" @click="loginOut()">退出</div>
-      </div>
-    </el-header>
-    <el-container>
-      <el-aside width="200px">
-        <el-col>
-          <el-menu
-            default-active="1"
-            text-color="#000"
-            active-text-color="#000"
-            class="el-menu-vertical-demo"
-          >
-            <router-link to="/">
-              <el-menu-item index="1">
-                <i class="el-icon-s-home"></i>
-                <span slot="title">首页</span>
+    <el-aside width="200px">
+      <el-col>
+        <el-menu
+          default-active="1"
+          text-color="#000"
+          active-text-color="#000"
+          class="el-menu-vertical-demo"
+        >
+          <router-link to="/">
+            <el-menu-item index="1">
+              <i class="el-icon-s-home"></i>
+              <span slot="title">首页</span>
+            </el-menu-item>
+          </router-link>
+
+          <el-submenu index="2">
+            <template slot="title">
+              <i class="el-icon-s-order"></i>
+              <span>文章管理</span>
+            </template>
+            <router-link to="/list">
+              <el-menu-item index="2-1">
+                <i class="el-icon-reading"></i>
+                <span>文章列表</span>
               </el-menu-item>
             </router-link>
+            <router-link to="/edit">
+              <el-menu-item index="2-2">
+                <i class="el-icon-edit"></i>
+                <span>文章编辑</span>
+              </el-menu-item>
+            </router-link>
+          </el-submenu>
+        </el-menu>
+      </el-col>
+    </el-aside>
 
-            <el-submenu index="2">
-              <template slot="title">
-                <i class="el-icon-s-order"></i>
-                <span>文章管理</span>
-              </template>
-              <router-link to="/list">
-                <el-menu-item index="2-1">
-                  <i class="el-icon-reading"></i>
-                  <span>文章列表</span>
-                </el-menu-item>
-              </router-link>
-              <router-link to="/edit">
-                <el-menu-item index="2-2">
-                  <i class="el-icon-edit"></i>
-                  <span>文章编辑</span>
-                </el-menu-item>
-              </router-link>
-            </el-submenu>
-          </el-menu>
-        </el-col>
-      </el-aside>
+    <el-container>
+      <el-header>
+        <div class="logo">HLC-BOLG</div>
+        <div class="user-info">
+          <div class="avator">
+            <img src="@/assets/images/tx.png" alt="" sizes="" srcset="" />
+          </div>
+          <div class="name">{{ username }}</div>
+          <div class="loginout" @click="loginOut()">退出</div>
+        </div>
+      </el-header>
       <el-container>
         <el-main>
           <el-breadcrumb separator-class="el-icon-arrow-right">
@@ -103,19 +104,21 @@ export default {
 <style lang="less" scoped>
 .layout {
   min-height: 100vh;
+  background: #e4e6ee;
   .el-aside {
     min-height: 100%;
   }
-  .el-header,
-  .el-footer {
-    background-color: #fff;
-    color: #333;
-    text-align: center;
-  }
+
   .el-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: #fff;
+    color: #333;
+    text-align: center;
+    height: auto !important;
+    line-height: 1;
+    padding: 20px 30px;
     .logo {
       font-size: 32px;
       font-weight: 600;
@@ -142,12 +145,30 @@ export default {
     }
   }
   .el-aside {
-    background-color: #dde1e6;
+    background-color: #001d3b;
     color: #333;
   }
-
+  /deep/ .el-menu {
+    background-color: #001d3b;
+    color: #fff;
+    border: none;
+    .el-menu-item,
+    .el-submenu__title {
+      &.is-active {
+        color: #ff7e00 !important;
+        background-color: #00142c;
+      }
+      &:hover {
+        background-color: #00142c !important;
+      }
+    }
+    .el-menu-item,
+    .el-submenu__title {
+      color: #788ea5 !important;
+    }
+  }
   .el-main {
-    background-color: #e9eef3;
+    background-color: #fcf8ff;
     color: #333;
     text-align: center;
   }

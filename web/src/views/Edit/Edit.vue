@@ -4,7 +4,7 @@
  * @Date: 2023-03-25 20:35:22
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-04-01 14:59:46
+ * @LastEditTime: 2023-04-03 15:28:22
  * @LastEditTime: 2023-03-30 09:36:43
  * @RevisionHistory: 
 -->
@@ -70,26 +70,26 @@ export default {
       }
     },
     async imgAdd(pos, $file) {
-      var _this = this;
-      var formdata = new FormData();
-      formdata.append("file", $file);
-      await this.$api.uploadImg(formdata);
-      // if (reslut.code == 200) {
-      //   var url = reslut.url;
-      //   _this.$refs.md.$img2Url(pos, url);
-      // }
+      let _this = this;
+      let result = await this.$api.uploadImg($file);
+      console.log(result);
+      if (result.code == 200) {
+        let url = result.data.url;
+        _this.$refs.md.$img2Url(pos, url);
+      }
     },
 
     handleError(err) {
       console.log(err);
     },
     async byIdGetArticle() {
-      let id = this.$route.params.id;
-      if (id) {
+      let article_id = this.$route.params.article_id;
+      if (article_id) {
         let result = await this.$api.getArticle({
-          id: this.$route.params.id,
+          article_id,
         });
         this.form = result.data;
+        console.log(this.form);
         this.form.tags = this.form.tags.map((item) => item).join(",");
       }
     },
