@@ -4,13 +4,28 @@
  * @Date: 2023-03-23 22:31:20
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-04-03 17:19:21
+ * @LastEditTime: 2023-04-03 21:45:16
  * @RevisionHistory: 
 -->
 <template>
   <el-container class="layout">
-    <el-aside width="200px">
+    <el-aside width="220px">
       <el-col>
+        <!-- partial:index.partial.html -->
+        <div class="avatar-box">
+          <div class="avatar">
+            <a href="https://codepen.io/MarioDesigns/">
+              <img
+                src="@/assets/images/skytsunami.png"
+                alt="Skytsunami"
+              />
+            </a>
+          </div>
+          <div class="content">
+            <h1>HLC BOLG</h1>
+          </div>
+        </div>
+        <!-- partial -->
         <el-menu
           default-active="1"
           text-color="#000"
@@ -189,6 +204,95 @@ export default {
   .el-main {
     background-color: #fcf8ff;
     color: #333;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 24px;
+    margin: 10px 0 0 0;
+    font-weight: lighter;
+    text-transform: uppercase;
+    color: #eeeeee;
+  }
+
+  p {
+    font-size: 12px;
+    font-weight: light;
+    color: #333333;
+  }
+
+  span a {
+    font-size: 18px;
+    color: #cccccc;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: all 0.4s ease-in-out;
+  }
+  span a:hover {
+    color: #ffffff;
+  }
+
+  @-webkit-keyframes float {
+    0% {
+      box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+      transform: translatey(0px);
+    }
+    50% {
+      box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
+      transform: translatey(-20px);
+    }
+    100% {
+      box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+      transform: translatey(0px);
+    }
+  }
+
+  @keyframes float {
+    0% {
+      box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+      transform: translatey(0px);
+    }
+    50% {
+      box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
+      transform: translatey(-20px);
+    }
+    100% {
+      box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+      transform: translatey(0px);
+    }
+  }
+  .avatar-box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+  }
+
+  .avatar {
+    width: 120px;
+    height: 120px;
+    box-sizing: border-box;
+    border: 5px white solid;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    transform: translatey(0px);
+    -webkit-animation: float 6s ease-in-out infinite;
+    animation: float 6s ease-in-out infinite;
+  }
+  .avatar img {
+    width: 100%;
+    height: auto;
+  }
+
+  .content {
+    width: 100%;
+    max-width: 600px;
+    padding: 10px 40px 30px;
+    box-sizing: border-box;
     text-align: center;
   }
 }

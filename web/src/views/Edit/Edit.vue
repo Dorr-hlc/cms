@@ -4,7 +4,7 @@
  * @Date: 2023-03-25 20:35:22
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-04-03 21:35:21
+ * @LastEditTime: 2023-04-03 22:19:33
  * @LastEditTime: 2023-03-30 09:36:43
  * @RevisionHistory: 
 -->
@@ -48,7 +48,7 @@ export default {
     return {
       form: {
         title: "",
-        tags: [],
+        tags: "",
         author: "",
         desc: "",
         status: "1",
@@ -60,6 +60,7 @@ export default {
   computed: {},
   methods: {
     onSubmit() {
+      this.form.tags = this.form.tags.split(",");
       this.$api.subArticle(this.form);
       this.$router.push({ name: "List" });
     },
@@ -67,7 +68,7 @@ export default {
     valueChange(value, render) {
       //value为输入的内容，render是markdown渲染之后的html代码
       if (value) {
-        console.log(value, render);
+        // console.log(value, render);
       }
     },
 

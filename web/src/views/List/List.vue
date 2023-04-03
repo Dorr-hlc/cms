@@ -4,7 +4,7 @@
  * @Date: 2023-03-26 22:31:37
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-04-03 17:39:21
+ * @LastEditTime: 2023-04-03 22:08:30
  * @RevisionHistory: 
 -->
 <template>
@@ -97,7 +97,7 @@ export default {
     return {
       tableData: [],
       currentPage: 1,
-      limit: 1,
+      limit: 2,
       pagination: {
         page: 1,
         totalArticles: 0,
