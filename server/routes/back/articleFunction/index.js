@@ -4,7 +4,7 @@
  * @Date: 2023-03-26 09:42:42
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-04-03 17:47:03
+ * @LastEditTime: 2023-04-03 21:27:49
  * @RevisionHistory:
  */
 const { log } = require("console");
@@ -91,7 +91,7 @@ async function uploadImg(req, res, next) {
 // 查询文章
 async function getArticle(req, res, next) {
   try {
-    const user_id = req.user.data.user._id;
+    const user_id = req.user.data.userInfo._id;
     let { page = 1, limit = 10 } = req.query;
     page = parseInt(page);
     limit = parseInt(limit);
@@ -112,7 +112,7 @@ async function getArticle(req, res, next) {
     const count = await query.clone().countDocuments();
     const data = await query.exec();
     const totalPages = Math.ceil(count / limit);
-    console.log(count,totalPages);
+    console.log(count, totalPages);
     return disposeSendResponse({
       res,
       code: "200",
