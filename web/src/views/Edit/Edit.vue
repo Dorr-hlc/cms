@@ -4,7 +4,7 @@
  * @Date: 2023-03-25 20:35:22
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-04-03 17:24:13
+ * @LastEditTime: 2023-04-03 21:35:21
  * @LastEditTime: 2023-03-30 09:36:43
  * @RevisionHistory: 
 -->
@@ -48,7 +48,7 @@ export default {
     return {
       form: {
         title: "",
-        tags: "",
+        tags: [],
         author: "",
         desc: "",
         status: "1",
@@ -90,8 +90,7 @@ export default {
         let result = await this.$api.getArticle({
           article_id,
         });
-        this.form = result.data;
-        console.log(this.form);
+        this.form = result.data.articles;
         this.form.tags = this.form.tags.map((item) => item).join(",");
       }
     },

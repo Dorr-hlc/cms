@@ -91,7 +91,7 @@ async function uploadImg(req, res, next) {
 // 查询文章
 async function getArticle(req, res, next) {
   try {
-    const user_id = req.user.data.userInfo._id;
+    const user_id = req.user.data.user._id;
     let { page = 1, limit = 10 } = req.query;
     page = parseInt(page);
     limit = parseInt(limit);
