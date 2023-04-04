@@ -4,7 +4,7 @@
  * @Date: 2023-03-23 22:20:18
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-03-26 13:29:39
+ * @LastEditTime: 2023-04-04 16:46:36
  * @RevisionHistory: 
  */
 const createError = require("http-errors");
@@ -26,7 +26,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 app.use(requireToken); //放在路由前，以便于对下面的路由api进行token验证
-app.use("/front", backRouter);
+app.use("/back", backRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

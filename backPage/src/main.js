@@ -43,6 +43,8 @@ import {
   DropdownItem,
   DropdownMenu,
   Pagination,
+  Card,
+  Cascader,
 } from "element-ui";
 Vue.use(Button)
   .use(Container)
@@ -70,7 +72,9 @@ Vue.use(Button)
   .use(Dropdown)
   .use(DropdownItem)
   .use(DropdownMenu)
-  .use(Pagination);
+  .use(Pagination)
+  .use(Card)
+  .use(Cascader);
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
 

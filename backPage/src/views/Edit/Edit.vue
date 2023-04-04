@@ -4,7 +4,7 @@
  * @Date: 2023-03-25 20:35:22
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-04-03 22:19:33
+ * @LastEditTime: 2023-04-04 16:56:43
  * @LastEditTime: 2023-03-30 09:36:43
  * @RevisionHistory: 
 -->
@@ -15,10 +15,11 @@
         <el-input v-model="form.title" placeholder="请输入文章标题"></el-input>
       </el-form-item>
       <el-form-item label="标签">
-        <el-input v-model="form.tags" placeholder="请输入文章标签"></el-input>
-      </el-form-item>
-      <el-form-item label="作者">
-        <el-input v-model="form.author" placeholder="请输入文章作者"></el-input>
+        <el-cascader
+          v-model="form.tags"
+          :options="options"
+          @change="handleChange"
+        ></el-cascader>
       </el-form-item>
       <el-form-item label="描述">
         <el-input v-model="form.desc" placeholder="请输入文章描述"></el-input>
@@ -41,6 +42,7 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 export default {
   components: {},
   props: [],
@@ -48,19 +50,80 @@ export default {
     return {
       form: {
         title: "",
-        tags: "",
-        author: "",
+        tags: [],
         desc: "",
         status: "1",
         content: "",
       },
+      options: [
+        {
+          value: "生活",
+          label: "生活",
+          children: [
+            {
+              value: "美食",
+              label: "美食",
+            },
+            {
+              value: "旅游",
+              label: "旅游",
+            },
+          ],
+        },
+        {
+          value: "工作",
+          label: "工作",
+          children: [
+            {
+              value: "jQuery",
+              label: "jQuery",
+            },
+            {
+              value: "Vue",
+              label: "Vue",
+            },
+            {
+              value: "React",
+              label: "React",
+            },
+            {
+              value: "Node",
+              label: "Node",
+            },
+            {
+              value: "MongoDB",
+              label: "MongoDB",
+            },
+            {
+              value: "MySql",
+              label: "MySql",
+            },
+            {
+              value: "Css",
+              label: "Css",
+            },
+            {
+              value: "JavaScript",
+              label: "JavaScript",
+            },
+          ],
+        },
+      ],
     };
   },
   watch: {},
-  computed: {},
+  computed: {
+    ...mapState({
+      username: (state) => state.userinfo.LoginInfo.username,
+    }),
+  },
   methods: {
     onSubmit() {
-      this.form.tags = this.form.tags.split(",");
+      const newProps = {
+        author: this.username,
+      }; //新增属性，一个是tags格式化成数组，一个是当前登录的作者名
+      const updatedForm = Object.assign({}, this.form, newProps);
+      this.$set(this, "form", updatedForm); //添加当前登录的作者名
       this.$api.subArticle(this.form);
       this.$router.push({ name: "List" });
     },
@@ -71,7 +134,9 @@ export default {
         // console.log(value, render);
       }
     },
-
+    handleChange(value) {
+      console.log(value);
+    },
     async imgAdd(pos, $file) {
       let _this = this;
       let result = await this.$api.uploadImg($file);
@@ -92,7 +157,6 @@ export default {
           article_id,
         });
         this.form = result.data.articles;
-        this.form.tags = this.form.tags.map((item) => item).join(",");
       }
     },
   },
@@ -108,5 +172,16 @@ export default {
   border-radius: 10px;
   margin-top: 40px;
   padding: 30px;
+}
+.el-cascader {
+  width: 100%;
+}
+</style>
+<style>
+.el-cascader-menu {
+  min-height: auto;
+}
+.el-cascader-menu__wrap {
+  /* height: auto; */
 }
 </style>

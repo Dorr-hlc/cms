@@ -4,7 +4,7 @@
  * @Date: 2023-03-23 22:28:18
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-04-01 23:03:44
+ * @LastEditTime: 2023-04-04 11:22:11
  * @RevisionHistory:
  */
 import Vue from "vue";
@@ -16,12 +16,17 @@ const router = new VueRouter({
   routes: [
     {
       path: "/",
-      name: "Home",
+      name: "/",
       component: () => import("@/layout/Basic"),
       meta: {
         title: "首页",
       },
       children: [
+        // {
+        //   path: "/",
+        //   name: "/",
+        //   component: () => import("@/views/Home/Home"),
+        // },
         {
           path: "/list",
           name: "List",

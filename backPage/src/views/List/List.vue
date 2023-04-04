@@ -4,7 +4,7 @@
  * @Date: 2023-03-26 22:31:37
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-04-03 22:08:30
+ * @LastEditTime: 2023-04-04 15:33:37
  * @RevisionHistory: 
 -->
 <template>
@@ -14,12 +14,20 @@
         >新增</el-button
       >
     </div>
-
     <el-table :data="tableData" style="width: 100%">
       <el-table-column label="日期">
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
-          <span style="margin-left: 10px">{{ scope.row.time }}</span>
+          <span style="margin-left: 10px">{{
+            formatDated(scope.row.time)
+          }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="标题">
+        <template slot-scope="scope">
+          <div slot="reference" class="name-wrapper">
+            <el-tag size="medium">{{ scope.row.title }}</el-tag>
+          </div>
         </template>
       </el-table-column>
       <el-table-column label="标签">
@@ -34,13 +42,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="标题">
-        <template slot-scope="scope">
-          <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.title }}</el-tag>
-          </div>
-        </template>
-      </el-table-column>
+
       <el-table-column label="作者">
         <template slot-scope="scope">
           <div slot="reference" class="name-wrapper">
@@ -83,7 +85,7 @@
       :page-sizes="[1, 2, 3, 4]"
       :page-size="limit"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="pagination.totalPages"
+      :total="pagination.totalArticles"
     >
     </el-pagination>
   </div>
@@ -107,9 +109,11 @@ export default {
   },
   watch: {},
   computed: {
-    // formatDates(timestamp) {
-    //   return moment(timestamp).format("YYYY-MM-DD");
-    // },
+    formatDated() {
+      return (timestamp) => {
+        return moment.utc(timestamp).local().format("YYYY-MM-DD HH:mm:ss");
+      };
+    },
   },
   methods: {
     handleEdit(index, row) {
@@ -155,10 +159,12 @@ export default {
       }
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      this.limit = val;
+      this.getArticleList();
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      this.currentPage = val;
+      this.getArticleList();
     },
   },
   created() {},
@@ -190,5 +196,8 @@ export default {
 .el-pagination {
   text-align: center;
   margin-top: 80px;
+}
+.el-tag {
+  margin: 0 5px;
 }
 </style>

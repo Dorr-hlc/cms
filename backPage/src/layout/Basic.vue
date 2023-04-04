@@ -4,7 +4,7 @@
  * @Date: 2023-03-23 22:31:20
  * @Author: 
  * @LastEditors: houliucun
- * @LastEditTime: 2023-04-03 21:45:16
+ * @LastEditTime: 2023-04-04 17:24:21
  * @RevisionHistory: 
 -->
 <template>
@@ -15,10 +15,7 @@
         <div class="avatar-box">
           <div class="avatar">
             <a href="https://codepen.io/MarioDesigns/">
-              <img
-                src="@/assets/images/skytsunami.png"
-                alt="Skytsunami"
-              />
+              <img src="@/assets/images/skytsunami.png" alt="Skytsunami" />
             </a>
           </div>
           <div class="content">
@@ -63,7 +60,6 @@
 
     <el-container>
       <el-header>
-        <div class="logo">HLC-BOLG</div>
         <div class="user-info">
           <div class="avator">
             <img src="@/assets/images/tx.png" alt="" sizes="" srcset="" />
@@ -76,20 +72,15 @@
               </div>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
+              <el-dropdown-item icon="el-icon-plus">上传头像</el-dropdown-item>
               <el-dropdown-item icon="el-icon-circle-plus"
-                >狮子头</el-dropdown-item
-              >
-              <el-dropdown-item icon="el-icon-circle-plus-outline"
-                >螺蛳粉</el-dropdown-item
-              >
-              <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-circle-check"
-                >蚵仔煎</el-dropdown-item
+                >修改密码</el-dropdown-item
               >
             </el-dropdown-menu>
           </el-dropdown>
-          <!-- <div class="loginout" @click="loginOut()">退出</div> -->
+          <el-button size="mini" class="loginout" icon="el-icon-circle-close" @click="loginOut()"
+            >退出</el-button
+          >
         </div>
       </el-header>
       <el-container>
@@ -102,16 +93,22 @@
               {{ breadCrumbItem.meta.title }}</el-breadcrumb-item
             >
           </el-breadcrumb>
-          <router-view></router-view>
+          <template v-if="$route.name == '/'">
+            <Home />
+          </template>
+          <template v-else>
+            <router-view> </router-view>
+          </template>
         </el-main>
       </el-container>
     </el-container>
   </el-container>
 </template>
 <script>
+import Home from "@/components/Home/";
 import { mapState } from "vuex";
 export default {
-  components: {},
+  components: { Home },
   props: [],
   data() {
     return {};
@@ -146,7 +143,7 @@ export default {
   .el-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: end;
     background-color: #fff;
     color: #333;
     text-align: center;
@@ -173,7 +170,7 @@ export default {
       }
       .loginout {
         font-size: 16px;
-        margin-left: 40px;
+        margin-left: 10px;
         cursor: pointer;
       }
     }
@@ -295,5 +292,10 @@ export default {
     box-sizing: border-box;
     text-align: center;
   }
+}
+</style>
+<style>
+.el-breadcrumb {
+  font-size: 16px;
 }
 </style>

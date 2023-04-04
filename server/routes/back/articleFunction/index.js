@@ -4,7 +4,7 @@
  * @Date: 2023-03-26 09:42:42
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-04-03 21:27:49
+ * @LastEditTime: 2023-04-04 14:42:34
  * @RevisionHistory:
  */
 const { log } = require("console");
@@ -108,8 +108,7 @@ async function getArticle(req, res, next) {
     }
     // 当给定查询执行两次时，Mongoose 会抛出 "Query was already executed"(查询已执行)错误。对此最常见的解释是您正在混合 await 和回调。
     //解决方案是跳过传递回调。在 Mongoose 中不需要回调，因为 Mongoose 支持 promises 和 async/await。但如果我们想执行两次查询呢？可以使用 clone() 方法：
-    console.log(query);
-    const count = await query.clone().countDocuments();
+    const count = await ArticleModel.find({ user: user_id }).countDocuments();
     const data = await query.exec();
     const totalPages = Math.ceil(count / limit);
     console.log(count, totalPages);
@@ -121,7 +120,7 @@ async function getArticle(req, res, next) {
       data: {
         articles: data,
         pagination: {
-          page,
+          page, 
           totalPages,
           totalArticles: count,
         },

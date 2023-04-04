@@ -4,7 +4,7 @@
  * @Date: 2023-03-25 12:33:25
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-04-03 09:55:44
+ * @LastEditTime: 2023-04-04 16:39:24
  * @RevisionHistory:
  */
 const { disposeSendResponse } = require("../../../utils/resFunction");
@@ -44,7 +44,7 @@ async function Login(req, res) {
         type: "error",
       });
     }
-    console.log('继续执行');
+    console.log("继续执行");
     const token = generateToken({ user });
     return disposeSendResponse({
       res,
@@ -68,47 +68,54 @@ async function Login(req, res) {
   }
 }
 async function Register(req, res) {
-  const { username, password, email } = req.body;
-  const user = await UserModel.findOne({
-    $or: [{ username: username }, { email: email }],
-  }).exec();
-  if (!username || !password || !email) {
-    return disposeSendResponse({
-      res,
-      code: "400",
-      msg: "用户名或密码不能为空",
-      type: "error",
-    });
-  }
-  if (user.username === username || user.email === email) {
-    return disposeSendResponse({
-      res,
-      code: "400",
-      msg: "用户名或密码已被占用",
-      type: "error",
-    });
-  }
-  UserModel.create(
-    {
-      ...req.body,
-    },
-    (err, data) => {
-      if (err) {
+  try {
+    const { username, password, email } = req.body;
+    const user = await UserModel.findOne({
+      $or: [{ username: username }, { email: email }],
+    }).exec();
+
+    if (!username || !password || !email) {
+      return disposeSendResponse({
+        res,
+        code: "400",
+        msg: "用户名或密码不能为空",
+        type: "error",
+      });
+    }
+    if (user !== null) {
+      if (user.username === username || user.email === email) {
         return disposeSendResponse({
           res,
-          code: "401",
-          msg: "注册失败",
+          code: "400",
+          msg: "用户名或密码已被占用",
           type: "error",
         });
       }
-      return disposeSendResponse({
-        res,
-        code: "200",
-        msg: "注册成功",
-        type: "success",
-      });
     }
-  );
+    UserModel.create(
+      {
+        ...req.body,
+      },
+      (err, data) => {
+        if (err) {
+          return disposeSendResponse({
+            res,
+            code: "401",
+            msg: "注册失败",
+            type: "error",
+          });
+        }
+        return disposeSendResponse({
+          res,
+          code: "200",
+          msg: "注册成功",
+          type: "success",
+        });
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 module.exports = {

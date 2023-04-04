@@ -4,7 +4,7 @@
  * @Date: 2023-03-25 10:22:31
  * @Author:
  * @LastEditors: houliucun
- * @LastEditTime: 2023-04-02 00:28:18
+ * @LastEditTime: 2023-04-04 16:46:40
  * @RevisionHistory:
  */
 import axios from "axios";
@@ -13,7 +13,7 @@ import { Message } from "element-ui";
 // 创建axios实例
 const service = axios.create({
   //   baseURL: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_API : '/', // 请求的基础url, // 接口的基础路径
-  baseURL: "http://127.0.0.1:3000/front",
+  baseURL: "http://192.168.0.92:3000/back",
   timeout: 5000, // 请求超时时间
 });
 
