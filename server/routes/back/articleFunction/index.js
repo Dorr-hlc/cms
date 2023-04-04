@@ -111,7 +111,6 @@ async function getArticle(req, res, next) {
     const count = await ArticleModel.find({ user: user_id }).countDocuments();
     const data = await query.exec();
     const totalPages = Math.ceil(count / limit);
-    console.log(count, totalPages);
     return disposeSendResponse({
       res,
       code: "200",
@@ -120,7 +119,7 @@ async function getArticle(req, res, next) {
       data: {
         articles: data,
         pagination: {
-          page, 
+          page,
           totalPages,
           totalArticles: count,
         },
