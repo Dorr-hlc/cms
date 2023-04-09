@@ -2,7 +2,7 @@
  * @Author: Dorr-hlc 1726660621@qq.com
  * @Date: 2023-04-05 17:46:21
  * @LastEditors: Dorr-hlc 1726660621@qq.com
- * @LastEditTime: 2023-04-09 21:31:17
+ * @LastEditTime: 2023-04-09 21:44:12
  * @FilePath: \frontPage\pages\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -45,7 +45,7 @@
             </client-only>
           </div>
 
-          <div class="bnr-txt" ref="element">
+          <div class="bnr-txt" data-aos="fade-down">
             <p class="subheading">嗨喽</p>
             <h1>Dorr一名热爱足球的前端工程师</h1>
             <p class="desc">
@@ -60,10 +60,10 @@
             </p>
           </div>
         </div>
-        <div class="hot" ref="element">
+        <div class="hot">
           <h2>最新博客</h2>
-          <ul class="hot-list">
-            <li>
+          <ul class="hot-list"  >
+            <li  data-aos="fade-left" data-aos-duration="600">
               <nuxt-to to="/"
                 ><img src="~assets/images/more-1.jpg" alt="" srcset="" />
                 <div class="info">
@@ -76,7 +76,7 @@
                 </div>
               </nuxt-to>
             </li>
-            <li>
+            <li data-aos="fade-left" data-aos-duration="800">
               <nuxt-to to="/"
                 ><img src="~assets/images/more-1.jpg" alt="" srcset="" />
                 <div class="info">
@@ -89,7 +89,7 @@
                 </div>
               </nuxt-to>
             </li>
-            <li>
+            <li data-aos="fade-left" data-aos-duration="1000">
               <nuxt-to to="/"
                 ><img src="~assets/images/more-1.jpg" alt="" srcset="" />
                 <div class="info">
@@ -102,7 +102,7 @@
                 </div>
               </nuxt-to>
             </li>
-            <li>
+            <li data-aos="fade-left" data-aos-duration="1200">
               <nuxt-to to="/"
                 ><img src="~assets/images/more-1.jpg" alt="" srcset="" />
                 <div class="info">
@@ -143,24 +143,9 @@ export default {
   },
   watch: {},
   computed: {},
-  methods: {
-    handleScroll(event) {
-      const element = event.target;
-      const rect = element.getBoundingClientRect();
-      const offset = window.pageYOffset + rect.top;
-      const scrollPosition = element.scrollTop;
-      if (scrollPosition >= offset) {
-        element.classList.add("transition-class");
-      }
-    },
-  },
+  methods: {},
   created() {},
   mounted() {
-    const elements = document.querySelectorAll('[ref^="element"]');
-    console.log(elements);
-    elements.forEach((element) => {
-      element.addEventListener("scroll", this.handleScroll, { passive: true });
-    });
     this.loading = false;
   },
 };
@@ -248,24 +233,8 @@ export default {
 .pageContent {
   width: 78%;
 }
-[data-aos="float-up"] {
-  animation: floatUp 1s ease-in-out;
-}
-
-@keyframes floatUp {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-10px);
-  }
-}
 </style>
 <style lang="less">
-.transition-class {
-  display: none;
-}
-
 .swiper-pagination-bullet {
   position: relative;
   width: 10px;

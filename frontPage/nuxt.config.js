@@ -2,7 +2,7 @@
  * @Author: Dorr-hlc 1726660621@qq.com
  * @Date: 2023-04-05 17:46:21
  * @LastEditors: Dorr-hlc 1726660621@qq.com
- * @LastEditTime: 2023-04-09 20:58:56
+ * @LastEditTime: 2023-04-09 21:35:21
  * @FilePath: \frontPage\nuxt.config.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE,
  */
@@ -22,13 +22,17 @@ export default {
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
     { rel: "preconnect", href: "https://fonts.gstatic.com" },
     { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&display=swap" },
-
     ],
+    script: [
+      { src: 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js' }
+    ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [{
     src: "~/assets/css/style.css", ssr: false
+  }, {
+    src: 'aos/dist/aos.css', ssr: false
   }],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -40,7 +44,7 @@ export default {
     src: "~/plugins/swiper.js",
     ssr: false
   },
-  { src: '~/plugins/scrollmagic.js', ssr: false }
+  { src: '~/plugins/aos.js', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
