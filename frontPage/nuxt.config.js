@@ -2,7 +2,7 @@
  * @Author: Dorr-hlc 1726660621@qq.com
  * @Date: 2023-04-05 17:46:21
  * @LastEditors: Dorr-hlc 1726660621@qq.com
- * @LastEditTime: 2023-04-09 17:25:44
+ * @LastEditTime: 2023-04-09 20:58:56
  * @FilePath: \frontPage\nuxt.config.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE,
  */
@@ -40,7 +40,7 @@ export default {
     src: "~/plugins/swiper.js",
     ssr: false
   },
-  { src: '~/plugins/aos.js', ssr: false }
+  { src: '~/plugins/scrollmagic.js', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
