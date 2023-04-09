@@ -1,74 +1,96 @@
+<!--
+ * @Author: Dorr-hlc 1726660621@qq.com
+ * @Date: 2023-04-05 17:46:21
+ * @LastEditors: Dorr-hlc 1726660621@qq.com
+ * @LastEditTime: 2023-04-09 17:49:58
+ * @FilePath: \frontPage\pages\index.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
-  <div class="flex-container">
-    <div
-      class="flex-slide home"
-      :class="{ showDetails: showDetails.home }"
-      @mouseover="showDetails.home = true"
-      @mouseout="showDetails.home = false"
-    >
-      <div class="flex-title flex-title-home">Home</div>
-      <div class="flex-about flex-about-home">
-        <p>Click here to navigate to the home section of the website</p>
-      </div>
-    </div>
-    <div
-      class="flex-slide about"
-      :class="{ showDetails: showDetails.about }"
-      @mouseover="showDetails.about = true"
-      @mouseout="showDetails.about = false"
-    >
-      <div class="flex-title">About</div>
-      <div class="flex-about">
-        <p>Click here to navigate to the About section of the website</p>
-      </div>
-    </div>
-    <div
-      class="flex-slide work"
-      :class="{ showDetails: showDetails.work }"
-      @mouseover="showDetails.work = true"
-      @mouseout="showDetails.work = false"
-    >
-      <div class="flex-title">Work</div>
-      <div class="flex-about">
-        <p>Listing relevant snippets of work:</p>
-        <ul>
-          <li>First piece of work</li>
-          <li>Second piece of work</li>
-          <li>Third piece of work</li>
-        </ul>
-      </div>
-    </div>
-    <div
-      class="flex-slide contact"
-      :class="{ showDetails: showDetails.contact }"
-      @mouseover="showDetails.contact = true"
-      @mouseout="showDetails.contact = false"
-    >
-      <div class="flex-title">Contact</div>
-      <div class="flex-about">
-        <p>Use the contact form below</p>
-        <form class="contact-form">
-          <p>Email <input type="text" name="email" /></p>
-          <p>
-            Comment <textarea type="text" name="comment" row="5"></textarea>
+  <div class="box">
+    <Aside></Aside>
+
+    <div class="pageContent">
+      <div class="bnr">
+        <div class="bnr-slider">
+          <client-only>
+            <swiper ref="mySwiper" :options="swiperOption">
+              <swiper-slide>
+                <img src="~assets/images/img-1.jpg" alt="" srcset="" />
+              </swiper-slide>
+              <swiper-slide>
+                <img src="~assets/images/img-2.jpg" alt="" srcset="" />
+              </swiper-slide>
+              <div class="swiper-pagination" slot="pagination"></div>
+            </swiper>
+          </client-only>
+        </div>
+
+        <div class="bnr-txt" data-aos="float-up">
+          <p class="subheading">嗨喽</p>
+          <h1>Dorr一名热爱足球的前端工程师</h1>
+          <p class="desc">
+            作为一名web前端开发人员，我负责构建和维护网站和应用程序。我有扎实的HTML、CSS和JavaScript编程技能，能够将设计师提供的设计转化为交互性强、易于使用的网站和应用程序。
+            能够根据项目需求选择合适的工具。我了解响应式设计和移动优先设计的原则，并能够开发适用于各种设备和屏幕大小的网站和应用程序。
+            我也了解后端开发，熟悉Node.js和Express框架，能够与后端开发人员合作构建完整的应用程序。我了解数据库设计和管理，能够使用MySQL和MongoDB等数据库管理工具。
+            我注重代码质量和可维护性，熟悉版本控制工具，例如Git和SVN，能够使用这些工具进行协作开发。
           </p>
-          <p><input type="submit" name="email" value="Send Message" /></p>
-        </form>
+          <p class="desc">
+            除了技术技能，我也注重团队合作和沟通能力。我能够与设计师、后端开发人员和其他团队成员合作，共同解决问题，并确保项目按时交付。
+            总之，作为一名web前端开发人员，我拥有扎实的技术技能和团队合作能力，能够构建高质量、易于使用的网站和应用程序，为用户提供良好的体验。
+          </p>
+        </div>
+      </div>
+      <div class="hot" data-aos="float-up">
+        <h2>最新博客</h2>
+        <ul class="hot-list">
+          <li>
+            <nuxt-to to="/"
+              ><img src="~assets/images/more-1.jpg" alt="" srcset=""
+            /></nuxt-to>
+            <div class="icon"></div>
+          </li>
+          <li>
+            <nuxt-to to="/"
+              ><img src="~assets/images/more-1.jpg" alt="" srcset=""
+            /></nuxt-to>
+          </li>
+          <li>
+            <nuxt-to to="/"
+              ><img src="~assets/images/more-1.jpg" alt="" srcset=""
+            /></nuxt-to>
+          </li>
+          <li>
+            <nuxt-to to="/"
+              ><img src="~assets/images/more-1.jpg" alt="" srcset=""
+            /></nuxt-to>
+          </li>
+          <li>
+            <nuxt-to to="/"
+              ><img src="~assets/images/more-1.jpg" alt="" srcset=""
+            /></nuxt-to>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
 </template>
 <script>
 export default {
-  components: {},
   props: [],
   data() {
     return {
-      showDetails: {
-        home: false,
-        about: false,
-        work: false,
-        contact: false,
+      swiperOption: {
+        loop: true,
+        effect: "fade",
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
       },
     };
   },
@@ -76,301 +98,131 @@ export default {
   computed: {},
   methods: {},
   created() {},
-  mounted() {},
+  mounted() {
+    this.$nextTick(() => {
+      this.$nuxt.$on("triggerScroll", () => {
+        this.$nuxt.$emit("triggerScrollDone");
+      });
+      this.$nuxt.$on("triggerScrollDone", () => {
+        this.$nuxt.$emit("resize");
+        this.$nuxt.$emit("scroll");
+      });
+      this.$nuxt.$emit("triggerScroll");
+    });
+  },
 };
 </script>
 <style lang="less" scoped>
-.flex-container {
-  position: absolute;
-  height: 100vh;
-  width: 100%;
-  display: -webkit-flex;
-  /* Safari */
+.box {
   display: flex;
-  overflow: hidden;
+  justify-content: flex-end;
 }
-@media screen and (max-width: 768px) {
-  .flex-container {
-    flex-direction: column;
+.bnr {
+  display: flex;
+  align-items: center;
+
+  &-slider {
+    width: 50%;
+  }
+  &-txt {
+    width: 50%;
+    padding: 0 3em;
+  }
+  .swiper-wrapper {
+    height: 100vh;
+  }
+  .swiper-slide img {
+    width: 100%;
+    height: 100vh;
+  }
+  .subheading {
+    font-size: 30px;
+    color: #bfbfbf;
+    font-weight: 400;
+  }
+  h1 {
+    font-size: 56px;
+    margin: 20px 0 40px 0;
+  }
+  .desc {
+    color: #999999;
+    font-size: 16px;
+    text-indent: 2em;
+    line-height: 25px;
   }
 }
-
-.flex-title {
-  color: #f1f1f1;
-  position: relative;
-  font-size: 6vw;
-  margin: auto;
+.hot {
+  padding: 5em 1.8em;
   text-align: center;
-  transform: rotate(90deg);
-  top: 15%;
-  -webkit-transition: all 500ms ease;
-  -moz-transition: all 500ms ease;
-  -ms-transition: all 500ms ease;
-  -o-transition: all 500ms ease;
-  transition: all 500ms ease;
-}
-@media screen and (max-width: 768px) {
-  .flex-title {
-    transform: rotate(0deg) !important;
+  h2 {
+    font-size: 32px;
+    margin-bottom: 60px;
   }
-}
-.flex-about {
-  opacity: 0;
-  color: #f1f1f1;
-  position: relative;
-  width: 70%;
-  font-size: 2vw;
-  padding: 5%;
-  top: 20%;
-  border: 2px solid #f1f1f1;
-  border-radius: 10px;
-  line-height: 1.3;
-  margin: auto;
-  text-align: left;
-  transform: rotate(0deg);
-  -webkit-transition: all 500ms ease;
-  -moz-transition: all 500ms ease;
-  -ms-transition: all 500ms ease;
-  -o-transition: all 500ms ease;
-  transition: all 500ms ease;
-}
-@media screen and (max-width: 768px) {
-  .flex-about {
-    padding: 0%;
-    border: 0px solid #f1f1f1;
-  }
-}
-
-.flex-slide {
-  -webkit-flex: 1;
-  /* Safari 6.1+ */
-  -ms-flex: 1;
-  /* IE 10 */
-  flex: 1;
-  cursor: pointer;
-  -webkit-transition: all 500ms ease;
-  -moz-transition: all 500ms ease;
-  -ms-transition: all 500ms ease;
-  -o-transition: all 500ms ease;
-  transition: all 500ms ease;
-  &.showDetails {
-    .flex-title {
-      transform: rotate(0deg);
-      top: 10%;
+  &-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    li {
+      position: relative;
+      width: 222px;
+      height: 200px;
     }
-    .flex-about {
-      opacity: 1;
-    }
-  }
-  &.hideDetails {
-    .flex-title {
-      transform: rotate(90deg);
-      top: 15%;
-    }
-    .flex-about {
+    .icon {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      background: rgba(0, 0, 0, 0.2);
       opacity: 0;
+      -moz-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      -webkit-transition: all 0.3s ease;
+      -ms-transition: all 0.3s ease;
+      transition: all 0.3s ease;
     }
   }
 }
-@media screen and (max-width: 768px) {
-  .flex-slide {
-    overflow: auto;
-    overflow-x: hidden;
+.pageContent {
+  width: 78%;
+}
+[data-aos="float-up"] {
+  animation: floatUp 1s ease-in-out;
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-10px);
+  }
+}
+</style>
+<style lang="less">
+.swiper-pagination-bullet {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  margin: 0px 6px !important;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  &::after {
+    position: absolute;
+    left: -3px;
+    top: -3px;
+    right: 0;
+    bottom: 0px;
+    content: "";
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    border: 1px solid #e6e6e6;
+    border-radius: 50%;
   }
 }
 
-@media screen and (max-width: 768px) {
-  .flex-slide p {
-    font-size: 2em;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .flex-slide ul li {
-    font-size: 2em;
-  }
-}
-
-.flex-slide:hover {
-  -webkit-flex-grow: 3;
-  flex-grow: 3;
-}
-
-.home {
-  height: 100vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/769286/lake-macquarie-71208_1920.jpg);
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-}
-@media screen and (min-width: 768px) {
-  .home {
-    animation: aboutFlexSlide 3s 1;
-    animation-delay: 0s;
-  }
-}
-
-@keyframes aboutFlexSlide {
-  0% {
-    -webkit-flex-grow: 1;
-    flex-grow: 1;
-  }
-  50% {
-    -webkit-flex-grow: 3;
-    flex-grow: 3;
-  }
-  100% {
-    -webkit-flex-grow: 1;
-    flex-grow: 1;
-  }
-}
-@media screen and (min-width: 768px) {
-  .flex-title-home {
-    transform: rotate(90deg);
-    top: 15%;
-    animation: aboutFlexSlide 3s 1;
-    animation-delay: 0s;
-  }
-}
-
-@keyframes homeFlextitle {
-  0% {
-    transform: rotate(90deg);
-    top: 15%;
-  }
-  50% {
-    transform: rotate(0deg);
-    top: 15%;
-  }
-  100% {
-    transform: rotate(90deg);
-    top: 15%;
-  }
-}
-.flex-about-home {
-  opacity: 0;
-}
-@media screen and (min-width: 768px) {
-  .flex-about-home {
-    animation: aboutFlexSlide 3s 1;
-    animation-delay: 0s;
-  }
-}
-
-@keyframes flexAboutHome {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-.about {
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/769286/beach-2089959_1280.jpg);
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-}
-
-.contact-form {
-  width: 100%;
-}
-
-input {
-  width: 100%;
-}
-
-textarea {
-  width: 100%;
-}
-
-.contact {
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/769286/lake-696098_1920.jpg);
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-}
-
-.work {
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/769286/forest-208517_1280.jpg);
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-}
-
-.spinner {
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: #222;
-  height: 100%;
-  width: 100%;
-  z-index: 11;
-  margin-top: 0;
-  color: #fff;
-  font-size: 1em;
-}
-
-.cube1,
-.cube2 {
-  background-color: #fff;
-  width: 15px;
-  height: 15px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  -webkit-animation: sk-cubemove 1.8s infinite ease-in-out;
-  animation: sk-cubemove 1.8s infinite ease-in-out;
-}
-
-.cube2 {
-  -webkit-animation-delay: -0.9s;
-  animation-delay: -0.9s;
-}
-
-@-webkit-keyframes sk-cubemove {
-  25% {
-    -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
-  }
-  50% {
-    -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
-  }
-  75% {
-    -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg)
-      scale(0.5);
-  }
-  100% {
-    -webkit-transform: rotate(-360deg);
-  }
-}
-@keyframes sk-cubemove {
-  25% {
-    transform: translateX(42px) rotate(-90deg) scale(0.5);
-    -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
-  }
-  50% {
-    transform: translateX(42px) translateY(42px) rotate(-179deg);
-    -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
-  }
-  50.1% {
-    transform: translateX(42px) translateY(42px) rotate(-180deg);
-    -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
-  }
-  75% {
-    transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
-    -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg)
-      scale(0.5);
-  }
-  100% {
-    transform: rotate(-360deg);
-    -webkit-transform: rotate(-360deg);
-  }
+.swiper-pagination-bullet-active {
+  background: #fff !important;
 }
 </style>
