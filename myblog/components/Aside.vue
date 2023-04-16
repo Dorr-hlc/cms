@@ -2,7 +2,7 @@
  * @Author: Dorr-hlc 1726660621@qq.com
  * @Date: 2023-04-15 17:59:17
  * @LastEditors: Dorr-hlc 1726660621@qq.com
- * @LastEditTime: 2023-04-15 19:56:10
+ * @LastEditTime: 2023-04-16 23:35:52
  * @FilePath: \myblog\components\aside.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -77,7 +77,7 @@
           <p class="copyright">@版权所有-HLC的个人博客，记录生活，成长学习</p>
         </footer>
       </div>
-      <a href="javacript:;" class="toggle" @click="toggleAside">Toggle</a>
+      <a href="javascript:;" class="toggle" @click="toggleAside">Toggle</a>
     </div>
   </client-only>
 </template>

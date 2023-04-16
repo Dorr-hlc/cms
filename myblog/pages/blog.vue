@@ -2,7 +2,7 @@
  * @Author: Dorr-hlc 1726660621@qq.com
  * @Date: 2023-04-16 00:35:22
  * @LastEditors: Dorr-hlc 1726660621@qq.com
- * @LastEditTime: 2023-04-16 13:26:32
+ * @LastEditTime: 2023-04-17 00:18:46
  * @FilePath: \myblog\pages\blog.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -22,50 +22,15 @@
               <h2>博客列表</h2>
             </header>
             <div class="posts">
-              <article>
+              <article v-for="post in posts.data.articles" :key="post._id">
                 <a href="#" class="image"
                   ><img
                     src="~assets/images/pexels-andrea-davis-3653849.jpg"
                     alt=""
                 /></a>
-                <h3>什么是SPA页面？</h3>
+                <h3>{{ post.title }}</h3>
                 <p>
-                  SPA（single-page
-                  application），翻译过来就是单页应用SPA是一种网络应用程序或网站的模型，它通过动态重写当前页面来与用户交互，这种方法避免了页面之间切换打断用户体验在单页应用中，所有必要的代码（HTML、JavaScript和CSS）都通过单个页面的加载而检索，或者根据需要（通常是为响应用户操作）动态装载适当的资源并添加到页面页面在任何时间点都不会重新加载
-                </p>
-                <ul class="actions">
-                  <li>
-                    <nuxt-link to="" class="button"> 更多 </nuxt-link>
-                  </li>
-                </ul>
-              </article>
-              <article>
-                <a href="#" class="image"
-                  ><img
-                    src="~assets/images/pexels-andrea-davis-3653849.jpg"
-                    alt=""
-                /></a>
-                <h3>什么是SPA页面？</h3>
-                <p>
-                  SPA（single-page
-                  application），翻译过来就是单页应用SPA是一种网络应用程序或网站的模型，它通过动态重写当前页面来与用户交互，这种方法避免了页面之间切换打断用户体验在单页应用中，所有必要的代码（HTML、JavaScript和CSS）都通过单个页面的加载而检索，或者根据需要（通常是为响应用户操作）动态装载适当的资源并添加到页面页面在任何时间点都不会重新加载
-                </p>
-                <ul class="actions">
-                  <li>
-                    <nuxt-link to="" class="button"> 更多 </nuxt-link>
-                  </li>
-                </ul>
-              </article>
-              <article>
-                <a href="#" class="image"
-                  ><img
-                    src="~assets/images/pexels-andrea-davis-3653849.jpg"
-                    alt=""
-                /></a>
-                <h3>什么是SPA页面？</h3>
-                <p>
-                  SPA（single-page
-                  application），翻译过来就是单页应用SPA是一种网络应用程序或网站的模型，它通过动态重写当前页面来与用户交互，这种方法避免了页面之间切换打断用户体验在单页应用中，所有必要的代码（HTML、JavaScript和CSS）都通过单个页面的加载而检索，或者根据需要（通常是为响应用户操作）动态装载适当的资源并添加到页面页面在任何时间点都不会重新加载
+                  {{ post.desc }}
                 </p>
                 <ul class="actions">
                   <li>
@@ -81,17 +46,19 @@
   </client-only>
 </template>
 <script>
+import api from "~/api/api.js";
 export default {
   components: {},
   props: [],
   data() {
-    return { currentToggle: false };
+    return { currentToggle: false, articleList: [] };
   },
-  asyncData(context) {
-    console.log(context.$axios);
-    return context.$axios.get("/getArticle?page=1&limit=2").then((res) => {
-      console.log(res.data.data.articles);
-    });
+  async asyncData() {
+    let response = await api.getPosts();
+    console.log(response.data);
+    return {
+      posts: response.data,
+    };
   },
   watch: {},
   computed: {},
