@@ -1,8 +1,8 @@
 <!--
  * @Author: Dorr-hlc 1726660621@qq.com
  * @Date: 2023-04-16 00:35:22
- * @LastEditors: Dorr-hlc 1726660621@qq.com
- * @LastEditTime: 2023-04-17 00:18:46
+ * @LastEditors: houliucun
+ * @LastEditTime: 2023-04-17 19:24:06
  * @FilePath: \myblog\pages\blog.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -21,23 +21,21 @@
             <header class="major">
               <h2>博客列表</h2>
             </header>
-            <div class="posts">
-              <article v-for="post in posts.data.articles" :key="post._id">
-                <a href="#" class="image"
-                  ><img
-                    src="~assets/images/pexels-andrea-davis-3653849.jpg"
-                    alt=""
-                /></a>
-                <h3>{{ post.title }}</h3>
-                <p>
-                  {{ post.desc }}
-                </p>
-                <ul class="actions">
-                  <li>
-                    <nuxt-link to="" class="button"> 更多 </nuxt-link>
-                  </li>
-                </ul>
-              </article>
+            <div class="blog-box">
+              <div class="posts">
+                <article v-for="post in posts.data.articles" :key="post._id">
+                  <h3>{{ post.title }}</h3>
+                  <p>
+                    {{ post.desc }}
+                  </p>
+                  <ul class="actions">
+                    <li>
+                      <nuxt-link to="" class="button"> 更多 </nuxt-link>
+                    </li>
+                  </ul>
+                </article>
+              </div>
+              <div class="userinfo"></div>
             </div>
           </section>
         </div>
@@ -72,4 +70,24 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.blog-box {
+  display: flex;
+  align-items: center;
+  article {
+    width: 70%;
+    background: #fff;
+    box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    padding: 24px;
+    &:not(:last-child) {
+      margin-bottom: 15px;
+    }
+    &::before {
+      content: none;
+    }
+  }
+  .userinfo {
+    width: 30%;
+  }
+}
 </style>
