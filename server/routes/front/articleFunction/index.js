@@ -4,7 +4,7 @@
  * @Date: 2023-03-26 09:42:42
  * @Author:
  * @LastEditors: Dorr-hlc 1726660621@qq.com
- * @LastEditTime: 2023-04-16 01:53:14
+ * @LastEditTime: 2023-04-19 01:31:48
  * @RevisionHistory:
  */
 const ArticleModel = require("../../../models/articleModels");
@@ -36,6 +36,7 @@ async function getArticle(req, res, next) {
     const skip = (page - 1) * limit;
     let query = ArticleModel.find().skip(skip).limit(limit);
     const { article_id, desc } = req.query;
+    console.log(article_id);
     if (article_id) {
       query = ArticleModel.findOne({ _id: article_id })
         .where("user")
