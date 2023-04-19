@@ -2,7 +2,7 @@
  * @Author: Dorr-hlc 1726660621@qq.com
  * @Date: 2023-04-16 00:35:22
  * @LastEditors: Dorr-hlc 1726660621@qq.com
- * @LastEditTime: 2023-04-19 00:59:15
+ * @LastEditTime: 2023-04-19 22:35:08
  * @FilePath: \myblog\pages\blog.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -79,7 +79,7 @@ export default {
       limit: 1,
     });
     let response = store.state.articles;
-    console.log(response);
+
     return {
       posts: response,
     };
@@ -111,6 +111,7 @@ export default {
   display: flex;
   align-items: center;
   article {
+    position: relative;
     width: 70%;
     background: #fff;
     box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.05);
@@ -120,7 +121,15 @@ export default {
       margin-bottom: 15px;
     }
     &::before {
-      content: none;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 100%;
+      background: #f56a6a;
+      border-radius: 10px 0 0 10px;
     }
   }
   .userinfo {

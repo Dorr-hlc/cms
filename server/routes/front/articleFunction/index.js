@@ -4,7 +4,7 @@
  * @Date: 2023-03-26 09:42:42
  * @Author:
  * @LastEditors: Dorr-hlc 1726660621@qq.com
- * @LastEditTime: 2023-04-19 01:31:48
+ * @LastEditTime: 2023-04-19 21:47:46
  * @RevisionHistory:
  */
 const ArticleModel = require("../../../models/articleModels");
@@ -39,8 +39,6 @@ async function getArticle(req, res, next) {
     console.log(article_id);
     if (article_id) {
       query = ArticleModel.findOne({ _id: article_id })
-        .where("user")
-        .equals();
     }
     if (desc) {
       query = query.sort({ time: desc }).where("user").equals();

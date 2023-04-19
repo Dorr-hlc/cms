@@ -39,7 +39,8 @@ export default {
       src: "~/plugins/axiosPlugin.js",
       ssr: true
     },
-    { src: '~/plugins/mavon-editor.js', mode: 'client' }
+    { src: '~/plugins/mavon-editor.js', mode: 'client' }, { src: '@/plugins/aos.js', ssr: false }
+
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

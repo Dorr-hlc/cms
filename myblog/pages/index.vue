@@ -1,19 +1,3 @@
-<!--
- * @Author: Dorr-hlc 1726660621@qq.com
- * @Date: 2023-04-15 17:36:40
- * @LastEditors: Dorr-hlc 1726660621@qq.com
- * @LastEditTime: 2023-04-16 00:35:34
- * @FilePath: \myblog\pages\index.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-<!--
- * @Author: Dorr-hlc 1726660621@qq.com
- * @Date: 2023-04-15 17:36:40
- * @LastEditors: Dorr-hlc 1726660621@qq.com
- * @LastEditTime: 2023-04-16 00:33:13
- * @FilePath: \myblog\pages\index.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 <template>
   <client-only>
     <div id="wrapper">
@@ -27,7 +11,7 @@
 
           <!-- Banner -->
           <section id="banner">
-            <div class="content">
+            <div class="content" data-aos="fade-right" data-aos-duration="800">
               <header>
                 <h1>
                   嗨咯，欢迎来到<br />
@@ -45,7 +29,7 @@
                 <li><a href="#" class="button big">了解更多</a></li>
               </ul>
             </div>
-            <span class="image object">
+            <span class="image object" data-aos="fade-up" data-aos-duration="800">
               <img
                 src="~assets/images/pexels-kevin-bidwell-2042281.jpg"
                 alt=""
@@ -59,7 +43,7 @@
               <h2>关于我</h2>
             </header>
             <div class="features">
-              <article>
+              <article  data-aos="fade-right" data-aos-duration="800">
                 <span class="icon fa-gem"></span>
                 <div class="content">
                   <h3>用户体验设计</h3>
@@ -68,7 +52,7 @@
                   </p>
                 </div>
               </article>
-              <article>
+              <article  data-aos="fade-right" data-aos-duration="1200">
                 <span class="icon solid fa-paper-plane"></span>
                 <div class="content">
                   <h3>技术栈广泛</h3>
@@ -77,7 +61,7 @@
                   </p>
                 </div>
               </article>
-              <article>
+              <article  data-aos="fade-right" data-aos-duration="1400">
                 <span class="icon solid fa-rocket"></span>
                 <div class="content">
                   <h3>协作能力</h3>
@@ -86,7 +70,7 @@
                   </p>
                 </div>
               </article>
-              <article>
+              <article   data-aos="fade-right" data-aos-duration="1600">
                 <span class="icon solid fa-signal"></span>
                 <div class="content">
                   <h3>持续学习</h3>
@@ -104,7 +88,7 @@
               <h2>最新博客</h2>
             </header>
             <div class="posts">
-              <article>
+              <article  data-aos="fade-up" data-aos-duration="800">
                 <a href="#" class="image"
                   ><img
                     src="~assets/images/pexels-andrea-davis-3653849.jpg"
@@ -121,7 +105,7 @@
                   </li>
                 </ul>
               </article>
-              <article>
+              <article data-aos="fade-up" data-aos-duration="1200">
                 <a href="#" class="image"
                   ><img
                     src="~assets/images/pexels-andrea-davis-3653849.jpg"
@@ -138,7 +122,7 @@
                   </li>
                 </ul>
               </article>
-              <article>
+              <article data-aos="fade-up" data-aos-duration="1400">
                 <a href="#" class="image"
                   ><img
                     src="~assets/images/pexels-andrea-davis-3653849.jpg"
@@ -173,7 +157,6 @@ export default {
   },
   methods: {
     toggle(data) {
-      console.log(data);
       this.currentToggle = data;
     },
   },
