@@ -3,8 +3,8 @@
  * @Abstract: 
  * @Date: 2023-03-23 22:31:20
  * @Author: 
- * @LastEditors: houliucun
- * @LastEditTime: 2023-04-04 17:24:21
+ * @LastEditors: Dorr-hlc 1726660621@qq.com
+ * @LastEditTime: 2023-04-20 22:49:16
  * @RevisionHistory: 
 -->
 <template>
@@ -143,7 +143,7 @@ export default {
   .el-header {
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
     background-color: #fff;
     color: #333;
     text-align: center;

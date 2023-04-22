@@ -4,7 +4,7 @@
  * @Date: 2023-03-26 09:42:42
  * @Author:
  * @LastEditors: Dorr-hlc 1726660621@qq.com
- * @LastEditTime: 2023-04-16 01:48:30
+ * @LastEditTime: 2023-04-22 17:04:32
  * @RevisionHistory:
  */
 const ArticleModel = require("../../../models/articleModels");
@@ -12,6 +12,7 @@ const { disposeSendResponse } = require("../../../utils/resFunction");
 const moment = require("moment");
 const multer = require("multer");
 const path = require("path");
+const cheerio = require('cheerio');
 const { v4: uuidv4 } = require("uuid");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -29,16 +30,26 @@ const upload = multer({ storage: storage });
 async function addArticle(req, res) {
   try {
     const user = req.user.data.user._id;
-    console.log(req.user.data);
     const { _id, ...articleData } = req.body;
     const time = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
+    const $ = cheerio.load(req.body.htmlText);
+    const directory = [];
+    $("a[id]").each((i, el) => {
+      console.log($(el).attr('id'));
+      if ($(el).attr('id')) {
+        const href = $(el).attr('id');
+        const name = $(el).parent().text().trim();
+        console.log(href, name);
+        directory.push({ href, name });
+      }
+    });
     const options = { new: true }; // 将选项对象提取出来，避免代码重复 ,{ new: true }告诉MongoDB返回更新后的文档。
     const article = _id
       ? await ArticleModel.findByIdAndUpdate(
-          _id,
-          { ...articleData, time, user },
-          options
-        )
+        _id,
+        { ...articleData, time, user, directory },
+        options
+      )
       : await ArticleModel.create({ ...articleData, time, user });
     const message = _id ? "文章更新成功" : "文章创建成功";
     return disposeSendResponse({
@@ -68,9 +79,8 @@ async function uploadImg(req, res, next) {
         return res.status(500).send("上传失败");
       }
       const file = req.file;
-      const url = `${req.protocol}://${req.get("host")}/images/${
-        file.filename
-      }`;
+      const url = `${req.protocol}://${req.get("host")}/images/${file.filename
+        }`;
       return disposeSendResponse({
         res,
         code: "200",

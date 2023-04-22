@@ -1,3 +1,11 @@
+<!--
+ * @Author: Dorr-hlc 1726660621@qq.com
+ * @Date: 2023-04-16 00:38:16
+ * @LastEditors: Dorr-hlc 1726660621@qq.com
+ * @LastEditTime: 2023-04-22 22:24:26
+ * @FilePath: \myblog\pages\ArticleDetails.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <client-only>
     <div id="wrapper">
@@ -7,57 +15,23 @@
       <div id="main" :class="{ inactive: currentToggle }">
         <div class="inner">
           <!-- Header -->
-          <mavon-editor
+          <!-- <mavon-editor
             v-model="markdownText"
             @change="changeData"
             style="display: none"
-          />
+          /> -->
           <MyHeader />
           <div class="article-content">
-            <article v-html="this.render" />
-            <!-- partial:index.partial.html -->
-            <div class="user-card">
-              <div class="container">
-                <img
-                  src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cookies.jpg"
-                  alt="cookies"
-                  class="hero-image"
-                />
-
-                <div class="information">
-                  <img
-                    src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/avatar.png"
-                    alt="avatar"
-                    class="avatar"
-                  />
-                  <div class="name">Dorr</div>
-                  <div class="position">道阻且长，行则将至</div>
-
-                  <div class="stats">
-                    <span class="followers">
-                      <span class="value">323</span>
-                      <span class="label">点赞</span>
-                    </span>
-                    <!-- end followers -->
-
-                    <span class="following">
-                      <span class="value">290</span>
-                      <span class="label">收藏</span>
-                    </span>
-
-                    <span class="stories">
-                      <span class="value">22</span>
-                      <span class="label">文章</span>
-                    </span>
-                  </div>
-                  <!-- end stats -->
-                </div>
-                <!-- end information -->
-              </div>
-              <!-- end container -->
+            <article v-html="this.markdownText" ref="article" />
+            <div class="article-directory">
+              <strong class="title">目录</strong>
+              <nuxt-link
+                :to="Routeformatting(directoryItem.href)"
+                v-for="directoryItem in directory"
+                :key="directoryItem.href"
+                >{{ directoryItem.name }}</nuxt-link
+              >
             </div>
-            <!-- end user-card -->
-            <!-- partial -->
           </div>
 
           <!-- Section -->
@@ -71,22 +45,27 @@ export default {
   components: {},
   props: [],
   data() {
-    return { currentToggle: false, markdownText: "", render: "" };
+    return { currentToggle: false, markdownText: "", render: "", tocs: [] };
   },
   async asyncData({ store, query }) {
     if (process.client) {
-      // 客户端渲染
       const markdownText = await store.getters.getArticleById(query._id);
-      return { markdownText: markdownText.content };
+      console.log(markdownText);
+      return {
+        markdownText: markdownText.htmlText,
+        directory: markdownText.directory,
+      };
     } else {
-      // 服务端渲染，需要重新请求数据
       await store.dispatch("getArticle", {
         page: 1,
-        limit: 1,
+        limit: 6,
         article_id: query._id,
       });
       const markdownText = await store.state.articles;
-      return { markdownText: markdownText.articles.content };
+      return {
+        markdownText: markdownText.articles.htmlText,
+        directory: markdownText.articles.directory,
+      };
     }
   },
   watch: {},
@@ -95,83 +74,54 @@ export default {
     toggle(data) {
       this.currentToggle = data;
     },
-    changeData(value, render) {
-      // value中是文本值,render是渲染出的html文本
-      this.render = render;
+    Routeformatting(anchor) {
+      return `${this.$route.path}?_id=${this.$route.query._id}#${anchor}`;
     },
   },
   created() {},
-  mounted() {},
+  mounted() {
+    console.log(this.$route);
+  },
 };
 </script>
 <style lang="less" scoped>
 .article-content {
   display: flex;
   align-items: flex-start;
+  justify-content: space-between;
   margin: 40px 0;
 }
 article {
   width: 70%;
 }
 
-.user-card {
-  width: 30%;
-  font: 13px/23px "Raleway", Arial, sans-serif;
-  color: #303336;
-  padding: 40px 0;
-}
-
-.container {
-  margin: 0 auto;
-  width: 300px;
-  height: 465px;
-  background: white;
-  border-radius: 3px;
-  position: relative;
-}
-
-.information {
-  text-align: center;
-}
-
-.avatar {
-  margin: 0 auto;
-  margin: -82px auto 15px;
-  display: block;
-}
-
-.name {
-  font-size: 22px;
-}
-
-.position {
-  font-size: 16px;
-  color: #8c98a8;
-  margin-bottom: 24px;
-}
-
-.stats {
+ul {
   margin: auto;
-  border-top: 1px solid #ced5e0;
-  width: 240px;
+  padding: 0px;
 }
-.stats .followers,
-.stats .following,
-.stats .stories {
-  display: inline-block;
-  padding: 6px 10px 0;
+</style>
+<style lang="less">
+h1 {
+  font-size: 3em;
 }
-.stats .followers,
-.stats .following {
-  border-right: 1px solid #ced5e0;
-}
-.stats .value {
-  font-size: 18px;
-  font-weight: 600;
-}
-.stats .label {
-  display: block;
-  font-size: 14px;
-  color: #8c98a8;
+.article-directory {
+  width: 26%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  box-shadow: 2.8px 6.6px 18.3px rgba(0, 0, 0, 0.047),
+    22px 53px 146px rgba(0, 0, 0, 0.11);
+  padding: 24px;
+  .title{
+    font-size: 24px;
+    margin-bottom: 14px;
+  }
+  a {
+    font-size: 16px;
+    text-decoration: none;
+    border-bottom: none;
+    color: #000;
+  }
 }
 </style>

@@ -3,8 +3,8 @@
  * @Abstract: 
  * @Date: 2023-03-25 20:35:22
  * @Author: 
- * @LastEditors: houliucun
- * @LastEditTime: 2023-04-04 16:56:43
+ * @LastEditors: Dorr-hlc 1726660621@qq.com
+ * @LastEditTime: 2023-04-22 16:21:24
  * @LastEditTime: 2023-03-30 09:36:43
  * @RevisionHistory: 
 -->
@@ -54,6 +54,7 @@ export default {
         desc: "",
         status: "1",
         content: "",
+        htmlText: "",
       },
       options: [
         {
@@ -131,7 +132,8 @@ export default {
     valueChange(value, render) {
       //value为输入的内容，render是markdown渲染之后的html代码
       if (value) {
-        // console.log(value, render);
+        console.log(value, render);
+        this.form.htmlText = render;
       }
     },
     handleChange(value) {
